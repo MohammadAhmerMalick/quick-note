@@ -10,6 +10,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Quick Note',
   description: 'Quick Note By Mohammad Ahmer Malick',
+  icons: './favicon.svg',
+  authors: [
+    {
+      name: 'Mohammad Ahmer Malick',
+      url: 'https://www.mohammadahmermalick.com/',
+    },
+  ],
 }
 
 export default function RootLayout({
