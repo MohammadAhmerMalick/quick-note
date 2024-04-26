@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-neutral-50 dark:bg-slate-950">
+    <html lang="en" className="bg-neutral-50 dark:bg-neutral-950">
       <body className={inter.className}>
         {children}
         <Toast />

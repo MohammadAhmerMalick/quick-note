@@ -1,21 +1,20 @@
 export default function Home() {
   return (
-    <main className="px-5 md:py-5 py-3">
-      <h1 className="md:text-4xl text-3xl font-semibold text-slate-950 dark:text-slate-50 text-center mb-8 mt-10">
-        Add Quick Note
+    <main className="px-2 md:py-5 py-3">
+      <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-10 mt-4 md:mb-8 mb-2">
+        Quick Note
       </h1>
-
-      <form className="max-w-lg mx-auto">
+      <form className="max-w-xl md:p-10 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800">
         <div className="mb-6">
           <label
             htmlFor="title"
-            className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white"
           >
             Title
             <input
               type="text"
               id="titleTitle"
-              className="mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
+              className="mt-3 bg-neutral-50 border border-neutral-300 text-neutral-900 text-xs rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
               placeholder="Title"
               required
             />
@@ -24,29 +23,29 @@ export default function Home() {
         <div className="mb-6">
           <label
             htmlFor="password"
-            className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white"
           >
             Note
             <textarea
               rows={5}
               id="password"
               placeholder="Note"
-              className="mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
+              className="mt-3 bg-neutral-50 border border-neutral-300 text-neutral-900 text-xs rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
             />
           </label>
         </div>
 
         <div className="mb-6">
-          <span className="block mb-2 text-md font-medium text-gray-900 dark:text-white">
+          <span className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">
             Upload File
           </span>
           <label
             htmlFor="dropzone-file"
-            className="mt-3 flex flex-col items-center justify-center w-full h-28 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="px-4 md:py-12 py-6 mt-3 w-full flex justify-center cursor-pointer md:border-2 border border-neutral-300 hover:border-yellow-500 border-dashed rounded-lg dark:border-neutral-600 dark:hover:border-yellow-500 focus:border-yellow-500 bg-neutral-50 dark:hover:bg-bray-800 dark:bg-neutral-800"
           >
-            <div className="flex pt-5 pb-6 items-center gap-5">
+            <div className="flex items-center gap-5">
               <svg
-                className="w-8 h-8 text-gray-500 dark:text-gray-400"
+                className="w-8 h-8 text-neutral-500 dark:text-neutral-400"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -61,11 +60,11 @@ export default function Home() {
                 />
               </svg>
               <div>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mb-2 text-xs text-neutral-500 dark:text-neutral-400">
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   SVG, PNG, JPG or GIF (MAX. 800x400px)
                 </p>
               </div>
@@ -75,11 +74,20 @@ export default function Home() {
         </div>
         <button
           type="submit"
-          className="text-slate-900 bg-yellow-400 hover:bg-yellow-400 focus:outline-none font-semibold rounded-md text-sm  px-5 py-2.5 text-center dark:bg-yellow-500 dark:hover:bg-yellow-600  focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 w-full block bg-PrimaryYellow"
+          className="text-neutral-900 text-xs text-center font-semibold bg-PrimaryYellow bg-yellow-400 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-600 focus:border-yellow-500 focus:outline-none rounded-md focus:ring-1 focus:ring-yellow-200 px-5 py-2.5 w-full block"
         >
           Submit
         </button>
       </form>
+      <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2">
+        Powered by:{' '}
+        <a
+          href="https://www.mohammadahmermalick.com"
+          className="text-neutral-950 dark:text-neutral-400 border-b border-neutral-500"
+        >
+          Mohammad Ahmer Malick
+        </a>
+      </p>
     </main>
   )
 }
