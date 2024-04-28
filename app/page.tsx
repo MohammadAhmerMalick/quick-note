@@ -1,7 +1,12 @@
+import ThemeSelector from '@/components/ThemeSelector'
+
 export default function Home() {
   return (
-    <main className="px-2 md:py-5 py-3">
-      <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-10 mt-4 md:mb-8 mb-2">
+    <main className="px-3 py-3">
+      <div className="text-right">
+        <ThemeSelector />
+      </div>
+      <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-0 mt-4 md:mb-8 mb-2">
         Quick Note
       </h1>
       <form className="max-w-xl md:p-10 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800">
