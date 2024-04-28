@@ -1,5 +1,10 @@
-import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
+
+import { classnames } from '@/utils'
+import Toast from '@/components/Toast'
+
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -7,6 +12,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Quick Note',
   description: 'Quick Note By Mohammad Ahmer Malick',
+  icons: './favicon.svg',
+  authors: [
+    {
+      name: 'Mohammad Ahmer Malick',
+      url: 'https://www.mohammadahmermalick.com/',
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -14,9 +26,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const cookieStore = cookies()
+  const theme = cookieStore.get('theme')?.value
+
   return (
-    <html lang="en" className="bg-neutral-50 dark:bg-slate-950">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={classnames(theme, 'bg-neutral-50 dark:bg-neutral-950')}
+    >
+      <body className={inter.className}>
+        {children}
+        <Toast />
+      </body>
     </html>
   )
 }
