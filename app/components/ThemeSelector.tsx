@@ -3,24 +3,26 @@
 import { ElementType, useEffect, useState } from 'react'
 
 import { classnames } from '@/utils'
-import { FiFiMoonIcon, FiFiSunIcon, FiFiMonitorIcon } from '@/components/icons'
+import { FiFiMoonIcon, FiFiSunIcon } from '@/components/icons'
 
-type themeModes = 'dark' | 'light' | 'system'
+export enum ThemeModes {
+  Dark = 'DARK',
+  Light = 'LIGHT',
+}
 
 interface Option {
-  id: themeModes
+  id: ThemeModes
   icon: ElementType
 }
 
 // Theme Options
 const options: Option[] = [
-  { id: 'light', icon: FiFiSunIcon },
-  { id: 'system', icon: FiFiMonitorIcon },
-  { id: 'dark', icon: FiFiMoonIcon },
+  { id: ThemeModes.Light, icon: FiFiSunIcon },
+  { id: ThemeModes.Dark, icon: FiFiMoonIcon },
 ]
 
 const ThemeSelector = () => {
-  const [selected, setSelected] = useState<Option['id']>('system')
+  const [selected, setSelected] = useState<Option['id']>(ThemeModes.Dark)
 
   const onThemeChange = async (option: Option['id']) => {
     setSelected(option)
@@ -28,29 +30,22 @@ const ThemeSelector = () => {
   }
 
   useEffect(() => {
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-      .matches
-      ? 'dark'
-      : 'light'
-
     const html = document.documentElement.classList
-    if (selected === 'light') html.remove('dark')
-    else if (selected === 'dark') html.add('dark')
-    else if (selected === 'system' && systemTheme === 'dark') html.add('dark')
-    else html.remove('dark')
+    if (selected === ThemeModes.Light) html.remove('dark')
+    else if (selected === ThemeModes.Dark) html.add('dark')
   }, [selected])
 
   // check cookie stored theme option
   useEffect(() => {
     // getting selected theme from the cookie
-    const theme = (`; ${document?.cookie}`
+    const theme = `; ${document?.cookie}`
       .split('; theme=')
       .pop()
       ?.split(';')
-      .shift() || 'system') as Option['id']
+      .shift() as ThemeModes
 
     // update the state
-    setSelected(theme)
+    setSelected(theme || ThemeModes.Dark)
   }, [])
 
   return (
@@ -59,13 +54,13 @@ const ThemeSelector = () => {
         <button
           type="button"
           key={option.id}
-          aria-label={option.id}
+          aria-label="theme"
           onClick={() => onThemeChange(option.id)}
           className={classnames(
             selected === option.id
-              ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800'
+              ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
               : 'border-transparent',
-            'md:p-2 p-1 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-full border text-ss'
+            'md:p-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-full border text-ss'
           )}
         >
           <option.icon />
