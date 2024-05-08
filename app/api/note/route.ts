@@ -4,22 +4,24 @@ import { Timestamp, getFirestore } from 'firebase-admin/firestore'
 
 import serviceAccount from '@/config/firebaseConfig.json'
 
-const createdApps = getApps()
+const firebaseApp = getApps()
 
-const App =
-  createdApps.length === 0
-    ? initializeApp({ credential: cert(serviceAccount) })
-    : createdApps[0]
+// prevents the firebase to initialize twice
+if (firebaseApp.length === 0)
+  initializeApp({ credential: cert(serviceAccount) })
 
+// ////////////
+// Post Request
 export const POST = async (request: Request) => {
+  // get data from the request
   const formData = await request.formData()
-
   const title = formData.get('title')
   const description = formData.get('description')
 
   const db = getFirestore()
 
-  const data = {
+  // new note data
+  const newNote = {
     title,
     description,
     files: [
@@ -29,10 +31,21 @@ export const POST = async (request: Request) => {
     deletedAt: null,
   }
 
-  // Add a new document in collection "cities" with ID 'LA'
-  const res = await db.collection('note').doc(randomUUID()).set(data)
+  // push the new not to firebase
+  const res = await db.collection('note').doc(randomUUID()).set(newNote)
 
-  return Response.json({ res })
+  // Response on success
+  if (res)
+    return Response.json(
+      { message: 'Note create Successfully', status: 'success' },
+      { status: 200 }
+    )
+
+  // Response on error
+  return Response.json(
+    { message: 'Unable to create note', status: 'error' },
+    { status: 400 }
+  )
 }
 
 export const GET = async () => {}
