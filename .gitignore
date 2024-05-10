@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase node config
+app/config/firebaseConfig.json
+
+# local note attachments
+public/assets/quick_note_files

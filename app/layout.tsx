@@ -27,12 +27,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const cookieStore = cookies()
-  const theme = cookieStore.get('theme')?.value
+  const theme = cookieStore.get('theme')?.value || 'dark'
 
   return (
     <html
       lang="en"
-      className={classnames(theme, 'bg-neutral-50 dark:bg-neutral-950')}
+      className={classnames(
+        'bg-neutral-50 dark:bg-neutral-950',
+        theme.toLowerCase()
+      )}
     >
       <body className={inter.className}>
         {children}
