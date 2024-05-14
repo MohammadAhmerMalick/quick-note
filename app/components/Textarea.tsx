@@ -1,30 +1,29 @@
-interface Input {
+interface Textarea {
   id: string
+  rows?: number
   value: string
   labelText: string
   placeholder: string
-  type?: 'text' | 'password' | 'email'
-  onChange: (currentTarget: EventTarget & HTMLInputElement) => void
+  onChange: (currentTarget: EventTarget & HTMLTextAreaElement) => void
 }
 
-const Input = ({
+const Textarea = ({
   id,
   value,
+  rows = 5,
   labelText,
   placeholder,
-  type = 'text',
   onChange,
-}: Input) => {
+}: Textarea) => {
   return (
     <label
       htmlFor={id}
       className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white"
     >
       {labelText}
-      <input
+      <textarea
         id={id}
-        required
-        type={type}
+        rows={rows}
         value={value}
         placeholder={placeholder}
         className="mt-3 bg-neutral-50 border border-neutral-300 text-neutral-900 text-xs rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
@@ -34,4 +33,4 @@ const Input = ({
   )
 }
 
-export default Input
+export default Textarea

@@ -33,20 +33,20 @@ const Login = () => {
         <div className="mb-6">
           <Input
             id="email"
+            value={email}
             labelText="Email"
             placeholder="Email"
-            value={email}
-            onChange={({ currentTarget }) => setEmail(currentTarget.value)}
+            onChange={({ value }) => setEmail(value)}
           />
         </div>
         <div className="mb-6">
           <Input
             id="password"
             type="password"
+            value={password}
             labelText="Password"
             placeholder="Password"
-            value={password}
-            onChange={({ currentTarget }) => setPassword(currentTarget.value)}
+            onChange={({ value }) => setPassword(value)}
           />
         </div>
         <Button>Login</Button>
