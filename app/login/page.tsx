@@ -1,23 +1,27 @@
 'use client'
 
+import { toast } from 'react-toastify'
 import { useState, type FormEvent } from 'react'
 
 import Input from '@/components/Input'
 import Button from '@/components/Button'
+import loginAction from '@/actions/loginAction'
 import ThemeSelector from '@/components/ThemeSelector'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log({
-      email,
-      password,
-    })
-  }
 
+    setIsSubmitting(true)
+
+    const { status, messages } = await loginAction(email, password)
+    messages.forEach((message) => toast[status](message))
+    setIsSubmitting(false)
+  }
   return (
     <main className="px-3 py-3">
       <div className="text-right">
@@ -49,7 +53,7 @@ const Login = () => {
             onChange={({ value }) => setPassword(value)}
           />
         </div>
-        <Button>Login</Button>
+        <Button disabled={isSubmitting}>Login</Button>
       </form>
       <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2 mt-1">
         Powered by:{' '}

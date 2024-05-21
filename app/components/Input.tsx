@@ -3,6 +3,7 @@ interface Input {
   value: string
   labelText: string
   placeholder: string
+  isRequired?: boolean
   type?: 'text' | 'password' | 'email'
   onChange: (currentTarget: EventTarget & HTMLInputElement) => void
 }
@@ -12,6 +13,7 @@ const Input = ({
   value,
   labelText,
   placeholder,
+  isRequired,
   type = 'text',
   onChange,
 }: Input) => {
@@ -23,7 +25,7 @@ const Input = ({
       {labelText}
       <input
         id={id}
-        required
+        required={isRequired}
         type={type}
         value={value}
         placeholder={placeholder}
