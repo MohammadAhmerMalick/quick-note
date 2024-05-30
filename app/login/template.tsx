@@ -15,8 +15,9 @@ const Template = async ({ children }: Template) => {
   const token = cookieStore.get('token')?.value
   const isVarified = await varifyToken(token)
 
-  // redirects the user to the login page if the user dont have a valid token
-  if (!isVarified) redirect(`/login`)
+  // redirects the user to the notes page if the user already have a valid token
+  if (isVarified) redirect(`/notes`)
+
   return children
 }
 
