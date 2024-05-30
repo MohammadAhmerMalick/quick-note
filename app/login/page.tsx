@@ -1,25 +1,26 @@
 'use client'
 
-import { type FormEvent, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useState, type FormEvent } from 'react'
 
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import Textarea from '@/components/Textarea'
-import FileDropAera from '@/components/FileDropAera'
+import loginAction from '@/actions/loginAction'
 import ThemeSelector from '@/components/ThemeSelector'
 
-export default function Home() {
-  const [file, setFile] = useState('')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log({
-      title,
-      description,
-      file,
-    })
+
+    setIsSubmitting(true)
+
+    const { status, messages } = await loginAction(email, password)
+    messages.forEach((message) => toast[status](message))
+    setIsSubmitting(false)
   }
   return (
     <main className="px-3 py-3">
@@ -35,31 +36,24 @@ export default function Home() {
       >
         <div className="mb-6">
           <Input
-            id="title"
-            value={title}
-            labelText="Title"
-            placeholder="Title"
-            onChange={({ value }) => setTitle(value)}
+            id="email"
+            value={email}
+            labelText="Email"
+            placeholder="Email"
+            onChange={({ value }) => setEmail(value)}
           />
         </div>
         <div className="mb-6">
-          <Textarea
-            id="description"
-            value={description}
-            labelText="Description"
-            placeholder="Description"
-            onChange={({ value }) => setDescription(value)}
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            labelText="Password"
+            placeholder="Password"
+            onChange={({ value }) => setPassword(value)}
           />
         </div>
-
-        <div className="mb-6">
-          <FileDropAera
-            id="file"
-            value={file}
-            onChange={({ value }) => setFile(value)}
-          />
-        </div>
-        <Button>Submit</Button>
+        <Button disabled={isSubmitting}>Login</Button>
       </form>
       <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2 mt-1">
         Powered by:{' '}
@@ -73,3 +67,5 @@ export default function Home() {
     </main>
   )
 }
+
+export default Login

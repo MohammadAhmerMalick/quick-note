@@ -21,6 +21,7 @@
       "@/*": ["./*"],
       "@/utils": ["./app/utils"],
       "@/config/*": ["./app/config/*"],
+      "@/actions/*": ["./app/actions/*"],
       "@/components/*": ["./app/components/*"]
     }
   },

@@ -21,6 +21,10 @@ const config: Config = {
           850: '#1f1f1f',
         },
       },
+      lineClamp: {
+        10: '10',
+        15: '15',
+      },
     },
   },
   plugins: [],
