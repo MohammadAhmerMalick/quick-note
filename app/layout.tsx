@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 import { classnames } from '@/utils'
 import Toast from '@/components/Toast'
-import serviceAccount from '@/config/firebaseConfig.json'
+import serviceAccount from '@/config/firebaseAdminConfig'
 
 import './globals.css'
 
