@@ -17,7 +17,7 @@ const firebaseApp = getApps()
 if (firebaseApp.length === 0)
   initializeApp({
     credential: cert(serviceAccount),
-    storageBucket: `gs://${serviceAccount.projectId}.appspot.com`,
+    storageBucket: `gs://${serviceAccount.project_id}.appspot.com`,
   })
 
 export const metadata: Metadata = {
