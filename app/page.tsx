@@ -6,7 +6,6 @@ import Input from '@/components/Input'
 import Button from '@/components/Button'
 import Textarea from '@/components/Textarea'
 import FileDropAera from '@/components/FileDropAera'
-import ThemeSelector from '@/components/ThemeSelector'
 
 export default function Home() {
   const [file, setFile] = useState('')
@@ -22,10 +21,7 @@ export default function Home() {
     })
   }
   return (
-    <main className="px-3 py-3">
-      <div className="text-right">
-        <ThemeSelector />
-      </div>
+    <main>
       <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-0 mt-4 md:mb-8 mb-2">
         Quick Note
       </h1>

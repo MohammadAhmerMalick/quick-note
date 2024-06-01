@@ -71,10 +71,7 @@ const page = () => {
   ]
 
   return (
-    <main className="px-3 py-3">
-      <div className="text-right">
-        <ThemeSelector />
-      </div>
+    <main>
       <div className="flex gap-5 flex-wrap justify-center mt-8">
         {notes.map((note) => (
           <div
