@@ -6,7 +6,6 @@ import { useState, type FormEvent } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import loginAction from '@/actions/loginAction'
-import ThemeSelector from '@/components/ThemeSelector'
 
 const Login = () => {
   const [email, setEmail] = useState('')

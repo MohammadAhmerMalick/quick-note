@@ -1,34 +1,64 @@
-import Link from 'next/link'
-import { type ElementType } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState, type ElementType } from 'react'
 
 import { classnames } from '@/utils'
+import logoutAction from '@/actions/logoutAction'
 import { FiHomeIcon, FiLogInIcon, FiFolderIcon } from '@/components/icons'
 
 interface Links {
   text: string
   link: string
+  onClick: () => void
   icon: ElementType
 }
 
-// Theme Options
-const links: Links[] = [
-  { text: 'Home', link: '/', icon: FiHomeIcon },
-  { text: 'Notes', link: '/notes', icon: FiFolderIcon },
-  { text: 'Login', link: '/login', icon: FiLogInIcon },
-]
-
 const NavLInks = () => {
+  const router = useRouter()
   const pathname = usePathname()
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const getAuthNavAction = () =>
+    isLoggedIn
+      ? {
+          text: 'Logout',
+          link: '/logout',
+          onClick: () => logoutAction(),
+          icon: FiLogInIcon,
+        }
+      : {
+          text: 'Login',
+          link: '/login',
+          onClick: () => router.push('/login'),
+          icon: FiLogInIcon,
+        }
+
+  const links: Links[] = [
+    {
+      text: 'Home',
+      link: "'/')",
+      onClick: () => router.push('/'),
+      icon: FiHomeIcon,
+    },
+    {
+      text: 'Notes',
+      link: "'/notes')",
+      onClick: () => router.push('/notes'),
+      icon: FiFolderIcon,
+    },
+    getAuthNavAction(),
+  ]
+
+  useEffect(() => {
+    setIsLoggedIn(document.cookie.includes('token'))
+  }, [])
 
   return (
     <div className="flex gap-3">
       {links.map((link) => (
-        <Link
-          href={link.link}
-          key={link.link}
-          type="button"
-          aria-label="theme"
+        <button
+          key={link.text}
+          onClick={link.onClick}
           className={classnames(
             link.link === pathname
               ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
@@ -42,7 +72,7 @@ const NavLInks = () => {
           )}
         >
           <link.icon /> {link.text}
-        </Link>
+        </button>
       ))}
     </div>
   )
