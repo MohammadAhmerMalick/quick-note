@@ -19,7 +19,8 @@ const Login = () => {
     setIsSubmitting(true)
 
     const { status, messages } = await loginAction(email, password)
-    messages.forEach((message) => toast[status](message))
+    if (status === 'error')
+      messages.forEach((message) => toast[status](message))
     setIsSubmitting(false)
   }
   return (

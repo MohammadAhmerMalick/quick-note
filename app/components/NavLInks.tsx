@@ -33,10 +33,11 @@ const NavLInks = () => {
             link.link === pathname
               ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
               : 'border-transparent',
-            'inline-flex items-center gap-3',
+            'inline-flex items-center gap-2',
             'px-3',
+            'px-3 h-8',
             'outline-0 rounded-full border',
-            'text-neutral-600 dark:text-neutral-50 text-ss',
+            'text-neutral-600 dark:text-neutral-50 text-sm',
             'hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:bg-neutral-100 dark:focus:bg-neutral-700'
           )}
         >

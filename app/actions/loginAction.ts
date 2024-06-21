@@ -11,9 +11,9 @@ const validateInputFields = (email: string, password: string) => {
   // set rules for input validation
   const schema = validate.object({
     email: validate
-      .string({ required_error: 'The Email is required' })
+      .string({ required_error: 'Email is required' })
       .email({ message: 'Invalid email address' }),
-    password: validate.string().min(1, 'The Password field is required'),
+    password: validate.string().min(1, 'Password field is required'),
   })
 
   // validate in input fiellds
