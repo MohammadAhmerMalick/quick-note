@@ -1,3 +1,9 @@
+import Image from 'next/image'
+import { type ChangeEvent, useState } from 'react'
+
+import { classnames } from '@/utils'
+import { CloudUploadIcon } from '@/components/icons'
+
 interface FileDropAera {
   id: string
   value: string
@@ -5,6 +11,18 @@ interface FileDropAera {
 }
 
 const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
+  const [image, setImage] = useState('')
+
+  const handleFileChange = ({
+    currentTarget,
+  }: ChangeEvent<HTMLInputElement>) => {
+    const file = currentTarget?.files?.[0]
+      ? URL.createObjectURL(currentTarget.files[0])
+      : ''
+
+    setImage(file)
+    onChange(currentTarget)
+  }
   return (
     <>
       <span className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">
@@ -12,24 +30,32 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
       </span>
       <label
         htmlFor={id}
-        className="px-4 md:py-12 py-6 mt-3 w-full flex justify-center cursor-pointer md:border-2 border border-neutral-300 hover:border-yellow-500 border-dashed rounded-lg dark:border-neutral-600 dark:hover:border-yellow-500 focus:border-yellow-500 bg-neutral-50 dark:hover:bg-bray-800 dark:bg-neutral-800"
+        className={classnames(
+          'relative',
+          'flex justify-center',
+          'w-full',
+          'md:border-2 border border-neutral-300 hover:border-yellow-500 border-dashed rounded-lg dark:border-neutral-600 dark:hover:border-yellow-500 focus:border-yellow-500',
+          'px-4 py-6 md:py-12 mt-3',
+          'bg-neutral-50 dark:hover:bg-bray-800 dark:bg-neutral-800',
+          'cursor-pointer'
+        )}
       >
+        {image && (
+          <Image
+            src={image}
+            width="510"
+            height="140"
+            alt="Selected File"
+            className={classnames(
+              'absolute top-0 bottom-0 right-0 left-0',
+              'w-full h-full ',
+              'opacity-20',
+              'object-cover'
+            )}
+          />
+        )}
         <div className="flex items-center gap-5">
-          <svg
-            className="w-8 h-8 text-neutral-500 dark:text-neutral-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 16"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-            />
-          </svg>
+          <CloudUploadIcon />
           <div>
             <p className="mb-2 text-xs text-neutral-500 dark:text-neutral-400">
               <span className="font-semibold">Click to upload</span> or drag and
@@ -45,7 +71,7 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
           type="file"
           value={value}
           className="hidden"
-          onChange={({ currentTarget }) => onChange(currentTarget)}
+          onChange={handleFileChange}
         />
       </label>
     </>

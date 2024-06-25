@@ -4,6 +4,7 @@ import FiFiSunIcon from './FiFiSunIcon'
 import FiFiMoonIcon from './FiFiMoonIcon'
 import FiFolderIcon from './FiFolderIcon'
 import FiFiMonitorIcon from './FiFiMonitorIcon'
+import CloudUploadIcon from './CloudUploadIcon'
 import AiOutlineReadIcon from './AiOutlineReadIcon'
 import AiOutlineDeleteIcon from './AiOutlineDeleteIcon'
 
@@ -13,6 +14,7 @@ export {
   FiFiSunIcon,
   FiFiMoonIcon,
   FiFolderIcon,
+  CloudUploadIcon,
   FiFiMonitorIcon,
   AiOutlineReadIcon,
   AiOutlineDeleteIcon,
