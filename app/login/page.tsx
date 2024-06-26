@@ -6,7 +6,6 @@ import { useState, type FormEvent } from 'react'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import loginAction from '@/actions/loginAction'
-import ThemeSelector from '@/components/ThemeSelector'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -19,14 +18,12 @@ const Login = () => {
     setIsSubmitting(true)
 
     const { status, messages } = await loginAction(email, password)
-    messages.forEach((message) => toast[status](message))
+    if (status === 'error')
+      messages.forEach((message) => toast[status](message))
     setIsSubmitting(false)
   }
   return (
-    <main className="px-3 py-3">
-      <div className="text-right">
-        <ThemeSelector />
-      </div>
+    <main>
       <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-0 mt-4 md:mb-8 mb-2">
         Quick Note
       </h1>
