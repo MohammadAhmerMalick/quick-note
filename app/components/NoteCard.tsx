@@ -2,19 +2,10 @@ import Image from 'next/image'
 
 import { classnames } from '@/utils'
 import Button from '@/components/Button'
-
-export interface NoteInterface {
-  id: number
-  file: {
-    src: string
-    type: string
-  }
-  title: string
-  description: string
-}
+import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 
 interface NoteCardProp {
-  note: NoteInterface
+  note: GetNotesActionReutrn
 }
 
 const NoteCard = ({ note }: NoteCardProp) => {
@@ -22,18 +13,18 @@ const NoteCard = ({ note }: NoteCardProp) => {
     <div
       className={classnames(
         'grid align-top',
-        note.file.src ? 'grid-rows-[208px_auto]' : 'grid-rows-1',
+        note.files?.length ? 'grid-rows-[208px_auto]' : 'grid-rows-1',
         'max-w-80 bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800'
       )}
     >
-      {note.file?.src && (
+      {!!note.files?.length && (
         <div>
           <Image
             width={320}
             height={208}
-            className="rounded-t-lg h-52"
-            src={note.file.src}
-            alt=""
+            className="rounded-t-lg h-52 object-cover"
+            src={note.files?.[0].link}
+            alt={note.title}
           />
         </div>
       )}
@@ -51,7 +42,7 @@ const NoteCard = ({ note }: NoteCardProp) => {
           className={classnames(
             'mb-3',
             'text-sm font-normal text-gray-700 dark:text-gray-400',
-            note.file.src ? 'line-clamp-5' : 'line-clamp-15'
+            note.files?.length ? 'line-clamp-5' : 'line-clamp-15'
           )}
         >
           {note.description}
