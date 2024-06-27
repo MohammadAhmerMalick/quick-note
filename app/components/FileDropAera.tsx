@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { type ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useState, useEffect } from 'react'
 
 import { classnames } from '@/utils'
 import { CloudUploadIcon } from '@/components/icons'
@@ -23,6 +23,12 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
     setImage(file)
     onChange(currentTarget)
   }
+
+  useEffect(() => {
+    // if value is null rest the display image
+    if (!value) setImage('')
+  }, [value])
+
   return (
     <>
       <span className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">
