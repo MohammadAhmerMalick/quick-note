@@ -15,6 +15,8 @@ export default function Home() {
   const [file, setFile] = useState<File | ''>('')
   const [description, setDescription] = useState('')
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const resetForm = () => {
     setFile('')
     setTitle('')
@@ -30,24 +32,32 @@ export default function Home() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // set form data
-    const formdata = new FormData()
-    formdata.append('title', title)
-    formdata.append('description', description)
-    if (file) formdata.append('file', file)
+    setIsSubmitting(true)
 
-    const response = await storeNoteAction(formdata)
+    try {
+      // set form data
+      const formdata = new FormData()
+      formdata.append('title', title)
+      formdata.append('description', description)
+      if (file) formdata.append('file', file)
 
-    // on success
-    if (response.status === 'success') {
-      toast.success(response.message)
-      toast.success(response.message)
-      resetForm()
+      const response = await storeNoteAction(formdata)
+
+      // on success
+      if (response.status === 'success') {
+        toast.success(response.message)
+        resetForm()
+      }
+
+      // on reject
+      else if (response.status === 'error')
+        response.messages.forEach((message) => toast.error(message))
+    } catch (error) {
+      console.log(error)
+      toast.error('Unable to create note')
+    } finally {
+      setIsSubmitting(false)
     }
-
-    // on reject
-    else if (response.status === 'error')
-      response.messages.forEach((message) => toast.error(message))
   }
   return (
     <main>
@@ -81,7 +91,10 @@ export default function Home() {
         <div className="mb-6">
           <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
         </div>
-        <Button>Submit</Button>
+
+        <Button disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting' : 'Submit'}
+        </Button>
       </form>
       <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2 mt-1">
         Powered by:{' '}
