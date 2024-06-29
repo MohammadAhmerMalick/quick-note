@@ -47,6 +47,7 @@ const loginAction = async (
     // firebase login
     await firebaseLogin(email, password)
 
+    console.log({ loginAction: 'Logged in successfully' })
     return {
       status: 'success',
       messages: ['Logged in successfully'],
@@ -62,6 +63,7 @@ const loginAction = async (
     if (error instanceof FirebaseError)
       messages = [error.code.split('/')[1].replaceAll('-', ' ')]
 
+    console.log({ loginAction: messages })
     return { messages, status: 'error' }
   }
 }

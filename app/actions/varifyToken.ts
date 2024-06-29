@@ -6,9 +6,10 @@ const varifyToken = async (token: string = '') => {
   try {
     const user = await getAuth().verifyIdToken(token)
 
+    console.log({ varifyToken: !!user.user_id })
     return !!user.user_id
   } catch (error) {
-    console.log({ error })
+    console.log({ varifyToken: error })
     return false
   }
 }
