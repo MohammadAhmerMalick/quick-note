@@ -13,12 +13,13 @@ const logoutAction = async (): Promise<{
     const auth = getAuth()
     await signOut(auth)
 
+    console.log({ logoutAction: 'Logged Out' })
     return {
       status: 'success',
       messages: ['Logged out'],
     }
   } catch (error) {
-    console.log({ error })
+    console.log({ logoutAction: error })
     return {
       status: 'error',
       messages: ['unable to logout'],
