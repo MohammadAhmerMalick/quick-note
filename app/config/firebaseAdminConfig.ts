@@ -1,3 +1,5 @@
+'use server'
+
 const serviceAccount = {
   type: process.env.FIREBASE_ADMIN_TYPE,
   projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
