@@ -4,6 +4,8 @@ import { getAuth } from 'firebase-admin/auth'
 
 const varifyToken = async (token: string = '') => {
   try {
+    if (!token) return false
+
     const user = await getAuth().verifyIdToken(token)
 
     console.log({ varifyToken: !!user.user_id })

@@ -19,6 +19,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
+      "@/lib/*": ["./app/lib/*"],
       "@/utils": ["./app/utils"],
       "@/config/*": ["./app/config/*"],
       "@/actions/*": ["./app/actions/*"],
