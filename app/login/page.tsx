@@ -17,10 +17,15 @@ const Login = () => {
 
     setIsSubmitting(true)
 
-    const { status, messages } = await loginAction(email, password)
-    if (status === 'error')
-      messages.forEach((message) => toast[status](message))
-    setIsSubmitting(false)
+    try {
+      const { status, messages } = await loginAction(email, password)
+      if (status === 'error')
+        messages.forEach((message) => toast[status](message))
+    } catch (error) {
+      toast.error('Unable to login')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
   return (
     <main>

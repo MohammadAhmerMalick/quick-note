@@ -13,7 +13,6 @@ const NotesList = () => {
   const fetchNotes = async () => {
     try {
       const res = await getNotesAction()
-      console.log(res)
       if (res.status === 'success') setNotes(res.data)
       else throw new Error('Unable to fetch notes')
     } catch (error) {
