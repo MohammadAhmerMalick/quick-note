@@ -18,21 +18,19 @@ const NoteCard = ({ note }: NoteCardProp) => {
       )}
     >
       {!!note.files?.length && (
-        <div>
-          <Image
-            width={320}
-            height={208}
-            className="rounded-t-lg h-52 object-cover"
-            src={note.files?.[0].link}
-            alt={note.title}
-          />
-        </div>
+        <Image
+          width={320}
+          height={208}
+          className="rounded-t-lg h-52 object-cover"
+          src={note.files?.[0].link}
+          alt={note.title}
+        />
       )}
       <div className={classnames('flex flex-col', 'h-full', 'p-5')}>
         <span>
           <h5
             title={note.title}
-            className="mb-2 text-lg font-bold text-gray-900 dark:text-white line-clamp-2"
+            className="mb-2 text-lg font-bold text-gray-900 dark:text-neutral-200 line-clamp-2"
           >
             {note.title}
           </h5>
