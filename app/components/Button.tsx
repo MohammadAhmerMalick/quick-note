@@ -1,19 +1,28 @@
-import { type ReactNode } from 'react'
+import { type MouseEventHandler, type ReactNode } from 'react'
 
 import { classnames } from '@/utils'
 
 interface Button {
+  className?: string
   disabled?: boolean
   children: ReactNode
   type?: 'submit' | 'button'
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-const Button = ({ type = 'submit', disabled, children }: Button) => {
+const Button = ({
+  type = 'submit',
+  disabled,
+  children,
+  className,
+  onClick,
+}: Button) => {
   return (
     <button
       type={type}
-      aria-disabled={disabled}
       disabled={disabled}
+      aria-disabled={disabled}
+      onClick={onClick}
       className={classnames(
         'block',
         'w-full',
@@ -39,7 +48,9 @@ const Button = ({ type = 'submit', disabled, children }: Button) => {
         'text-center',
         'font-semibold',
         'text-neutral-900',
-        'disabled:text-neutral-400'
+        'disabled:text-neutral-400',
+
+        className
       )}
     >
       {children}

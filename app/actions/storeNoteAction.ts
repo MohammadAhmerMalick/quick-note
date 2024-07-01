@@ -126,6 +126,7 @@ const storeNoteAction = async (
     const res = await db.collection('notes').doc(randomUUID()).set(newNote)
 
     // Response on success
+    console.log({ storeNoteAction: res })
     if (res) return { message: 'Note create Successfully', status: 'success' }
 
     // Response on error
@@ -138,6 +139,7 @@ const storeNoteAction = async (
         error ? error[0] : ''
       )
 
+    console.log({ storeNoteAction: error })
     return { messages, status: 'error' }
   }
 }

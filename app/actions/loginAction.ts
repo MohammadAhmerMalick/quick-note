@@ -5,7 +5,8 @@ import { FirebaseError } from 'firebase/app'
 import { z as validate, ZodError } from 'zod'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
-import { firebaseClientAuth } from '@/config/firebaseClientConfig'
+import Firebase from '@/lib/firebase'
+import '@/config/firebaseClientConfig'
 
 const validateInputFields = (email: string, password: string) => {
   // set rules for input validation
@@ -22,11 +23,8 @@ const validateInputFields = (email: string, password: string) => {
 }
 
 const firebaseLogin = async (email: string, password: string) => {
-  const res = await signInWithEmailAndPassword(
-    firebaseClientAuth,
-    email,
-    password
-  )
+  const app = Firebase.initializeClient()
+  const res = await signInWithEmailAndPassword(app, email, password)
   const token = await res.user.getIdToken()
 
   // set token in cookies
@@ -47,6 +45,7 @@ const loginAction = async (
     // firebase login
     await firebaseLogin(email, password)
 
+    console.log({ loginAction: 'Logged in successfully' })
     return {
       status: 'success',
       messages: ['Logged in successfully'],
@@ -62,6 +61,7 @@ const loginAction = async (
     if (error instanceof FirebaseError)
       messages = [error.code.split('/')[1].replaceAll('-', ' ')]
 
+    console.log({ loginAction: error })
     return { messages, status: 'error' }
   }
 }

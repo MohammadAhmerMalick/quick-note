@@ -18,35 +18,55 @@ export interface GetNotesActionReutrn {
   title: string
 }
 
-const getNotesAction = async (): Promise<GetNotesActionReutrn[]> => {
-  const db = getFirestore() // get db
-  const notes = db.collection('notes') // get notes collection
-  const doc = await notes.get() // get all notes
+interface SuccessRes {
+  data: GetNotesActionReutrn[]
+  status: 'success'
+}
 
-  const bucket = getStorage().bucket() // get bucket
+interface RejectRes {
+  message: string
+  status: 'error'
+}
 
-  const docs = await Promise.all(
-    doc.docs.map(async (doc) => {
-      const data = doc.data()
+const getNotesAction = async (): Promise<SuccessRes | RejectRes> => {
+  try {
+    const db = getFirestore() // get db
+    const notes = db.collection('notes') // get notes collection
+    const doc = await notes.get() // get all notes
 
-      const files = await Promise.all(
-        // add downloadable link in each file
-        data.files.map(
-          async (file: { size: number; type: string; name: string }) => {
-            const filePath = `${NOTE_FILES_FOLDER_NAME}/${file.name}`
-            const fileRef = bucket.file(filePath)
-            const downloadURL = await getDownloadURL(fileRef)
+    const bucket = getStorage().bucket() // get bucket
 
-            return { ...file, link: downloadURL }
-          }
+    const docs = await Promise.all(
+      doc.docs.map(async (doc) => {
+        const data = doc.data()
+
+        const files = await Promise.all(
+          // add downloadable link in each file
+          data.files.map(
+            async (file: { size: number; type: string; name: string }) => {
+              const filePath = `${NOTE_FILES_FOLDER_NAME}/${file.name}`
+              const fileRef = bucket.file(filePath)
+              const downloadURL = await getDownloadURL(fileRef)
+
+              return { ...file, link: downloadURL }
+            }
+          )
         )
-      )
 
-      return { ...data, files, id: doc.id }
-    })
-  )
+        return { ...data, files, id: doc.id }
+      })
+    )
+    const data = JSON.parse(JSON.stringify(docs))
 
-  return JSON.parse(JSON.stringify(docs))
+    console.log({ getNotesAction: data })
+    return { status: 'success', data }
+  } catch (error) {
+    console.log({ getNotesAction: error })
+    return {
+      message: 'Unable to get notes',
+      status: 'error',
+    }
+  }
 }
 
 export default getNotesAction
