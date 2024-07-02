@@ -54,7 +54,7 @@ const NavLInks = () => {
   }, [])
 
   return (
-    <div className="flex gap-3">
+    <div className="flex md:gap-3">
       {links.map((link) => (
         <button
           key={link.text}
