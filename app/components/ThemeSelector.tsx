@@ -58,7 +58,7 @@ const ThemeSelector = () => {
           onClick={() => onThemeChange(option.id)}
           className={classnames(
             selected === option.id
-              ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
+              ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10 sm:flex hidden'
               : 'border-transparent',
             'md:p-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-full border text-ss'
           )}

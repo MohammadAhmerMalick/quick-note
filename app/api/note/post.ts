@@ -53,7 +53,7 @@ const post = async (request: Request) => {
         name: destinationFileName,
       },
     ],
-    cretedAt: Timestamp.now(),
+    created: Timestamp.now(),
     deletedAt: null,
   }
 

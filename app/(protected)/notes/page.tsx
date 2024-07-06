@@ -3,21 +3,80 @@
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import NoteCard from '@/components/NoteCard'
+import NoteList from '@/app/components/NoteList'
+import restoreNoteAction from '@/app/actions/restoreNoteAction'
+import NoteStateSelector from '@/app/components/NoteStateSelector'
+import softDeleteNoteAction from '@/app/actions/softDeleteNoteAction'
+import NotesLayoutSelector from '@/app/components/NotesLayoutSelector'
 import getNotesAction, {
   type GetNotesActionReutrn,
 } from '@/actions/getNotesAction'
 
+let dbData: GetNotesActionReutrn[] = []
+type noteStates = 'stared' | 'notDeleted' | 'deleted'
+
 const NotesList = () => {
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
+  const [layout, setLayout] = useState<'card' | 'list'>('list')
+  const [counter, setCounter] = useState<number>(0)
+  const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
 
+  // fetch request
   const fetchNotes = async () => {
     try {
       const res = await getNotesAction()
-      if (res.status === 'success') setNotes(res.data)
-      else throw new Error('Unable to fetch notes')
+      //  on success
+      if (res.status === 'success') {
+        dbData = res.data
+        setNotes(dbData.filter((note) => !note.deletedAt))
+      } else throw new Error('Unable to fetch notes')
     } catch (error) {
+      // on reject
       console.log(error)
       toast.error('Unable to fetch note')
+    }
+  }
+
+  // delete request
+  const deleteNote = async (id: string) => {
+    try {
+      const { status } = await softDeleteNoteAction(id)
+
+      // on success
+      if (status === 'success') {
+        // change the deleted state of onetime fetched data
+        dbData = dbData.map((note) =>
+          id === note.id
+            ? { ...note, deletedAt: new Date().toString() }
+            : { ...note }
+        )
+
+        // update the counter to update the notes list
+        setCounter((c) => c + 1)
+      } else throw new Error('Unable to delete note')
+    } catch (error) {
+      // on reject
+      console.log({ error })
+      toast.error('Unable to delete')
+    }
+  }
+
+  const restoreNote = async (id: string) => {
+    try {
+      const { status } = await restoreNoteAction(id)
+      // on success
+      if (status === 'success') {
+        dbData = dbData.map((note) =>
+          id === note.id ? { ...note, deletedAt: null } : { ...note }
+        )
+
+        // update the counter to update the notes list
+        setCounter((c) => c + 1)
+      } else throw new Error('Unable to restore note')
+    } catch (error) {
+      // on reject
+      console.log({ error })
+      toast.error('Unable to restore')
     }
   }
 
@@ -25,12 +84,38 @@ const NotesList = () => {
     fetchNotes()
   }, [])
 
+  // handle which state of notes should be visible
+  useEffect(() => {
+    if (selectedState === 'stared')
+      setNotes(dbData.filter((note) => note.deletedAt))
+    else if (selectedState === 'notDeleted')
+      setNotes(dbData.filter((note) => !note.deletedAt))
+    else if (selectedState === 'deleted')
+      setNotes(dbData.filter((note) => note.deletedAt))
+  }, [selectedState, counter])
+
   return (
-    <main>
-      <div className="flex gap-5 flex-wrap justify-center mt-8">
-        {notes.map((note) => (
-          <NoteCard key={note.id} note={note} />
-        ))}
+    <main className="mt-4">
+      <div className="flex justify-end gap-1">
+        <NoteStateSelector
+          selectedState={selectedState}
+          setSelectedState={setSelectedState}
+        />
+        <NotesLayoutSelector layout={layout} setLayout={setLayout} />
+      </div>
+      <div className="flex gap-5 flex-wrap justify-center mt-4">
+        {notes.map((note) =>
+          layout === 'card' ? (
+            <NoteCard note={note} key={note.id} />
+          ) : (
+            <NoteList
+              note={note}
+              key={note.id}
+              deleteNote={deleteNote}
+              restoreNote={restoreNote}
+            />
+          )
+        )}
       </div>
     </main>
   )
