@@ -9,24 +9,17 @@ const softDeleteNoteAction = async (
 }> => {
   try {
     const db = getFirestore()
-
-    const res = await db
+    await db
       .collection('notes')
       .doc(id)
-      .update({
-        deletedAt: Timestamp.fromDate(new Date()),
-      })
+      .update({ deletedAt: Timestamp.fromDate(new Date()) })
 
-    console.log(res)
+    console.log({ softDeleteNoteAction: 'Note deleted' })
 
-    return {
-      status: 'success',
-    }
+    return { status: 'success' }
   } catch (error) {
     console.log({ softDeleteNoteAction: error })
-    return {
-      status: 'error',
-    }
+    return { status: 'error' }
   }
 }
 

@@ -12,20 +12,20 @@ export interface GetNotesActionReutrn {
     size: number
     type: string
   }[]
-  cretedAt: { _seconds: number; _nanoseconds: number }
-  deletedAt: null | string
-  description: string
   title: string
+  description: string
+  deletedAt: null | string
+  created: { _seconds: number; _nanoseconds: number }
 }
 
 interface SuccessRes {
-  data: GetNotesActionReutrn[]
   status: 'success'
+  data: GetNotesActionReutrn[]
 }
 
 interface RejectRes {
-  message: string
   status: 'error'
+  message: string
 }
 
 const getNotesAction = async (): Promise<SuccessRes | RejectRes> => {
@@ -58,7 +58,7 @@ const getNotesAction = async (): Promise<SuccessRes | RejectRes> => {
     )
     const data = JSON.parse(JSON.stringify(docs))
 
-    console.log({ getNotesAction: data })
+    console.log({ getNotesAction: 'notes fetched' })
     return { status: 'success', data }
   } catch (error) {
     console.log({ getNotesAction: error })

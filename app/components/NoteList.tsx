@@ -2,12 +2,15 @@ import Image from 'next/image'
 
 import { classnames } from '@/utils'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
+import { AiOutlineDeleteIcon, AiOutlineSaveIcon } from '@/components/icons'
 
 interface NoteListProp {
   note: GetNotesActionReutrn
+  deleteNote(id: string): void
+  restoreNote(id: string): void
 }
 
-const NoteList = ({ note }: NoteListProp) => {
+const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
   return (
     <div
       className={classnames(
@@ -50,6 +53,29 @@ const NoteList = ({ note }: NoteListProp) => {
             src={note.files?.[0].link}
             alt={note.title}
           />
+        )}
+      </div>
+      <div className="text-right mt-2">
+        {!note.deletedAt ? (
+          <button
+            aria-label="Delete Note"
+            className="border-neutral-850 text-white border bg-red-300 dark:bg-red-600 p-1 rounded-md"
+            onClick={() => deleteNote(note.id)}
+          >
+            <AiOutlineDeleteIcon />
+          </button>
+        ) : (
+          <button
+            aria-label="Restore Note"
+            className={classnames(
+              'p-1 shadow',
+              ' rounded-md border-white dark:border-neutral-700 border',
+              'bg-white dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700  focus:bg-neutral-100 dark:focus:bg-neutral-700'
+            )}
+            onClick={() => restoreNote(note.id)}
+          >
+            <AiOutlineSaveIcon />
+          </button>
         )}
       </div>
     </div>
