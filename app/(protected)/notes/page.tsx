@@ -2,6 +2,7 @@
 
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
+import Input from '@/app/components/Input'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/app/components/NoteList'
 import restoreNoteAction from '@/app/actions/restoreNoteAction'
@@ -16,19 +17,20 @@ let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'
 
 const NotesList = () => {
-  const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
-  const [layout, setLayout] = useState<'card' | 'list'>('list')
+  const [search, setSearch] = useState('')
   const [counter, setCounter] = useState<number>(0)
+  const [layout, setLayout] = useState<'card' | 'list'>('list')
+  const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
 
   // fetch request
   const fetchNotes = async () => {
     try {
-      const res = await getNotesAction()
+      const res = await getNotesAction() // fetch request
       //  on success
       if (res.status === 'success') {
-        dbData = res.data
-        setNotes(dbData.filter((note) => !note.deletedAt))
+        dbData = res.data // update inreactive data
+        setCounter((c) => c + 1) // to update ui
       } else throw new Error('Unable to fetch notes')
     } catch (error) {
       // on reject
@@ -40,7 +42,7 @@ const NotesList = () => {
   // delete request
   const deleteNote = async (id: string) => {
     try {
-      const { status } = await softDeleteNoteAction(id)
+      const { status } = await softDeleteNoteAction(id) // delete request
 
       // on success
       if (status === 'success') {
@@ -84,24 +86,42 @@ const NotesList = () => {
     fetchNotes()
   }, [])
 
-  // handle which state of notes should be visible
   useEffect(() => {
-    if (selectedState === 'stared')
-      setNotes(dbData.filter((note) => note.deletedAt))
-    else if (selectedState === 'notDeleted')
-      setNotes(dbData.filter((note) => !note.deletedAt))
+    let newNoteList: GetNotesActionReutrn[] = []
+
+    const inSearch = (note: GetNotesActionReutrn) => {
+      const string = search.toLocaleLowerCase()
+
+      return (
+        note.title.toLocaleLowerCase().includes(string) ||
+        note.description.toLocaleLowerCase().includes(string)
+      )
+    }
+
+    if (selectedState === 'notDeleted')
+      newNoteList = dbData.filter((note) => !note.deletedAt && inSearch(note))
     else if (selectedState === 'deleted')
-      setNotes(dbData.filter((note) => note.deletedAt))
-  }, [selectedState, counter])
+      newNoteList = dbData.filter((note) => note.deletedAt && inSearch(note))
+
+    setNotes(newNoteList)
+  }, [counter, search, selectedState])
 
   return (
     <main className="mt-4">
-      <div className="flex justify-end gap-1">
-        <NoteStateSelector
-          selectedState={selectedState}
-          setSelectedState={setSelectedState}
+      <div className="grid grid-cols-[auto_150px]">
+        <Input
+          id="search"
+          value={search}
+          placeholder="Search"
+          onChange={({ value }) => setSearch(value)}
         />
-        <NotesLayoutSelector layout={layout} setLayout={setLayout} />
+        <div className="flex justify-end gap-1">
+          <NoteStateSelector
+            selectedState={selectedState}
+            setSelectedState={setSelectedState}
+          />
+          <NotesLayoutSelector layout={layout} setLayout={setLayout} />
+        </div>
       </div>
       <div className="flex gap-5 flex-wrap justify-center mt-4">
         {notes.map((note) =>

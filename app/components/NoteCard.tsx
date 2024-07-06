@@ -26,7 +26,14 @@ const NoteCard = ({ note }: NoteCardProp) => {
           alt={note.title}
         />
       )}
-      <div className={classnames('flex flex-col', 'h-full', 'p-5')}>
+      <div
+        className={classnames(
+          'flex flex-col',
+          'h-full',
+          'p-5',
+          'overflow-hidden'
+        )}
+      >
         <span>
           <h5
             title={note.title}
