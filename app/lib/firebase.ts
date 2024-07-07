@@ -20,7 +20,9 @@ class Firebase {
     return app
   }
 
-  static initialize = () => {
+  static initialize = (): {
+    status: 'success' | 'error'
+  } => {
     try {
       // prevents the firebase to initialize twice
       if (!getApps().length) {
