@@ -15,7 +15,6 @@ const softDeleteNoteAction = async (
       .update({ deletedAt: Timestamp.fromDate(new Date()) })
 
     console.log({ softDeleteNoteAction: 'Note deleted' })
-
     return { status: 'success' }
   } catch (error) {
     console.log({ softDeleteNoteAction: error })
