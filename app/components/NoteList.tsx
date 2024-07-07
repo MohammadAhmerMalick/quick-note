@@ -69,8 +69,8 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
             aria-label="Restore Note"
             className={classnames(
               'p-1 shadow',
-              ' rounded-md border-white dark:border-neutral-700 border',
-              'bg-white dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700  focus:bg-neutral-100 dark:focus:bg-neutral-700'
+              ' rounded-md border-white dark:border-neutral-600 border',
+              'bg-white dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600  focus:bg-neutral-100 dark:focus:bg-neutral-600'
             )}
             onClick={() => restoreNote(note.id)}
           >

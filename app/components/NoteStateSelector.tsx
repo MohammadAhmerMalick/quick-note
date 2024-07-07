@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { classnames } from '@/utils'
+import IconButton from '@/components/IconButton'
 import { AiOutlineDeleteIcon, AiOutlineDatabaseIcon } from '@/components/icons'
 
 const NoteStateSelector = ({
@@ -13,30 +13,21 @@ const NoteStateSelector = ({
 }) => {
   return (
     <div className="flex gap-1">
-      <button
-        aria-label="Selected State"
+      <IconButton
+        ariaLabel={selectedState}
         onClick={() => setSelectedState('notDeleted')}
-        className={classnames(
-          selectedState === 'notDeleted'
-            ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
-            : 'border-transparent',
-          'md:p-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-md border text-ss'
-        )}
+        isActive={selectedState === 'notDeleted'}
       >
         <AiOutlineDatabaseIcon />
-      </button>
-      <button
-        aria-label="Selected State"
+      </IconButton>
+
+      <IconButton
+        ariaLabel={selectedState}
         onClick={() => setSelectedState('deleted')}
-        className={classnames(
-          selectedState === 'deleted'
-            ? 'shadow border-transparent dark:border-neutral-700 bg-white dark:bg-neutral-800 z-10'
-            : 'border-transparent',
-          'md:p-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-md border text-ss'
-        )}
+        isActive={selectedState === 'deleted'}
       >
         <AiOutlineDeleteIcon />
-      </button>
+      </IconButton>
     </div>
   )
 }
