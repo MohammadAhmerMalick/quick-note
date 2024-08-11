@@ -37,3 +37,19 @@ body {
     text-wrap: balance;
   }
 }
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #febe00;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #303030;
+}
