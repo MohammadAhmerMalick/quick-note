@@ -118,7 +118,7 @@ const storeNoteAction = async (
       description,
       files: fileData,
       deletedAt: null,
-      created: Timestamp.now(),
+      createdAt: Timestamp.now(),
     }
 
     // push the new note to firebase
