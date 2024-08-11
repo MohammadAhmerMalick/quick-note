@@ -22,11 +22,13 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
     >
       <div
         className={classnames(
-          'grid gap-5',
-          note.files?.length ? 'grid-cols-[auto_100px]' : 'grid-cols-1'
+          'grid gap-1',
+          note.files?.length
+            ? 'grid-cols-[auto_100px_26px]'
+            : 'grid-cols-[auto_26px]'
         )}
       >
-        <div>
+        <div className="overflow-hidden">
           <h5
             className={classnames(
               'font-bold text-gray-900 dark:text-neutral-200 line-clamp-2',
@@ -49,34 +51,34 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
           <Image
             width={100}
             height={100}
-            className="object-contain"
+            className="object-contain rounded-md"
             src={note.files?.[0].link}
             alt={note.title}
           />
         )}
-      </div>
-      <div className="text-right mt-2">
-        {!note.deletedAt ? (
-          <button
-            aria-label="Delete Note"
-            className="border-neutral-850 text-white border bg-red-300 dark:bg-red-600 p-1 rounded-md"
-            onClick={() => deleteNote(note.id)}
-          >
-            <AiOutlineDeleteIcon />
-          </button>
-        ) : (
-          <button
-            aria-label="Restore Note"
-            className={classnames(
-              'p-1 shadow',
-              ' rounded-md border-white dark:border-neutral-600 border',
-              'bg-white dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600  focus:bg-neutral-100 dark:focus:bg-neutral-600'
-            )}
-            onClick={() => restoreNote(note.id)}
-          >
-            <AiOutlineSaveIcon />
-          </button>
-        )}
+        <div className="flex flex-col justify-end">
+          {!note.deletedAt ? (
+            <button
+              aria-label="Delete Note"
+              className="border-neutral-850 text-white border bg-red-300 dark:bg-red-600 p-1 rounded-md"
+              onClick={() => deleteNote(note.id)}
+            >
+              <AiOutlineDeleteIcon />
+            </button>
+          ) : (
+            <button
+              aria-label="Restore Note"
+              className={classnames(
+                'p-1 shadow',
+                ' rounded-md border-white dark:border-neutral-600 border',
+                'bg-white dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600  focus:bg-neutral-100 dark:focus:bg-neutral-600'
+              )}
+              onClick={() => restoreNote(note.id)}
+            >
+              <AiOutlineSaveIcon />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
