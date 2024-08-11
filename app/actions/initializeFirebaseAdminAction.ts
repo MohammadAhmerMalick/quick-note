@@ -3,18 +3,16 @@
 import Firebase from '@/lib/firebase'
 
 const initializeFirebaseAdminAction = async () => {
-  console.log({
-    initializeFirebaseAdminAction: 'Initializing Firebase Admin',
-  })
-
   try {
-    const res = await Firebase.initialize()
-    return res
-  } catch (error) {
-    console.log(error)
-  }
+    const { status } = await Firebase.initialize()
+    if (status === 'error') throw Error
 
-  return { status: 'error' }
+    console.log({ initializeFirebaseAdminAction: 'Firebsae admin initialized' })
+    return { status: 'success' }
+  } catch (error) {
+    console.log({ initializeFirebaseAdminAction: error })
+    return { status: 'error' }
+  }
 }
 
 export default initializeFirebaseAdminAction

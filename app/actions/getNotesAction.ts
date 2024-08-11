@@ -15,7 +15,7 @@ export interface GetNotesActionReutrn {
   title: string
   description: string
   deletedAt: null | string
-  created: { _seconds: number; _nanoseconds: number }
+  createdAt: { _seconds: number; _nanoseconds: number }
 }
 
 interface SuccessRes {
@@ -32,7 +32,7 @@ const getNotesAction = async (): Promise<SuccessRes | RejectRes> => {
   try {
     const db = getFirestore() // get db
     const notes = db.collection('notes') // get notes collection
-    const doc = await notes.get() // get all notes
+    const doc = await notes.orderBy('createdAt', 'desc').get() // get all notes
 
     const bucket = getStorage().bucket() // get bucket
 
