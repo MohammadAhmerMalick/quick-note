@@ -108,11 +108,12 @@ const NotesList = () => {
 
   return (
     <main className="mt-4">
-      <div className="grid grid-cols-[auto_150px]">
+      <div className="flex gap-1">
         <Input
           id="search"
           value={search}
           placeholder="Search"
+          labelClassName="w-full"
           onChange={({ value }) => setSearch(value)}
         />
         <div className="flex justify-end gap-1">
