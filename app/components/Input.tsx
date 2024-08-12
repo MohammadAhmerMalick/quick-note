@@ -6,6 +6,7 @@ interface Input {
   labelText?: string
   placeholder: string
   isRequired?: boolean
+  labelClassName?: string
   type?: 'text' | 'password' | 'email'
   onChange: (currentTarget: EventTarget & HTMLInputElement) => void
 }
@@ -14,15 +15,19 @@ const Input = ({
   id,
   value,
   labelText,
-  placeholder,
   isRequired,
+  placeholder,
   type = 'text',
+  labelClassName,
   onChange,
 }: Input) => {
   return (
     <label
       htmlFor={id}
-      className="block text-sm font-medium text-neutral-900 dark:text-white"
+      className={classnames(
+        'block text-sm font-medium text-neutral-900 dark:text-white',
+        labelClassName
+      )}
     >
       {labelText}
       <input
