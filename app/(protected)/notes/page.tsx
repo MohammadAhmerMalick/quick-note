@@ -120,30 +120,32 @@ const NotesList = () => {
       ).length
     }
 
-    if (selectedState === 'notDeleted')
-      newNoteList = dbData.filter(
-        (note) => !note.deletedAt && inSearch(note) && inTokenFilter(note)
-      )
-    else if (selectedState === 'deleted')
-      newNoteList = dbData.filter(
-        (note) => note.deletedAt && inSearch(note) && inTokenFilter(note)
-      )
+    newNoteList = dbData.filter((note) =>
+      selectedState === 'deleted'
+        ? note.deletedAt
+        : !note.deletedAt && inSearch(note) && inTokenFilter(note)
+    )
+
     setNotes(newNoteList)
   }, [counter, selectedState, tokens, inSearch])
 
   useEffect(() => {
     const filterSet = new Set(
       dbData
-        .filter((note) => inSearch(note))
-        .map((t) => t.description.toLowerCase())
+        .filter((note) =>
+          inSearch(note) && selectedState === 'deleted'
+            ? note.deletedAt
+            : !note.deletedAt
+        )
+        .map((note) => note.description.toLowerCase())
         .join(' ')
         .replace(/[^a-zA-Z !?]+/g, ' ')
         .split(' ')
     )
 
     const fitlerArray = Array.from(filterSet).filter((c) => c.length > 2)
-    setTokens(fitlerArray.map((c) => ({ value: c, isSelected: false })))
-  }, [counter, inSearch])
+    setTokens(fitlerArray.sort().map((c) => ({ value: c, isSelected: false })))
+  }, [counter, selectedState, inSearch])
 
   return (
     <main className="mt-4">
@@ -163,8 +165,10 @@ const NotesList = () => {
           <NotesLayoutSelector layout={layout} setLayout={setLayout} />
         </div>
       </div>
+
       <TokenFilter tokens={tokens} setTokens={setTokens} />
-      <div className="flex gap-5 flex-wrap justify-center mt-4">
+
+      <div className="flex md:gap-4 gap-3 flex-wrap justify-center mt-4">
         {notes.map((note) =>
           layout === 'card' ? (
             <NoteCard note={note} key={note.id} />

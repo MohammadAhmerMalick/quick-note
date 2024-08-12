@@ -1,5 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react'
-import IconButton from './IconButton'
+import { useState, type Dispatch, type SetStateAction } from 'react'
+
+import { classnames } from '@/utils'
+import Button from '@/components/Button'
+import IconButton from '@/components/IconButton'
+import { BsTogglesIcon } from '@/components/icons'
 
 interface TokenFilterProps {
   tokens:
@@ -20,6 +24,7 @@ interface TokenFilterProps {
 }
 
 const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
+  const [isExpanded, setIsExpanded] = useState(false)
   const handleTokenSelect = (value: string, isSelected: boolean) => {
     setTokens((oldState) =>
       oldState?.map((token) => {
@@ -30,18 +35,31 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
   }
 
   return (
-    <div className="flex gap-1 flex-wrap text-red-50 px-1 mt-4">
-      {tokens?.map(({ value, isSelected }) => (
-        <IconButton
-          key={value}
-          ariaLabel={value}
-          isActive={isSelected}
-          className="px-1 !py-0 text-sm"
-          onClick={() => handleTokenSelect(value, isSelected)}
+    <div
+      className={classnames(
+        'overflow-y-auto mt-4',
+        isExpanded ? 'h-40' : 'h-6'
+      )}
+    >
+      <div className="flex gap-1 flex-wrap text-red-50 px-1">
+        <Button
+          className=" w-min !p-1"
+          onClick={() => setIsExpanded(!isExpanded)}
         >
-          {value}
-        </IconButton>
-      ))}
+          <BsTogglesIcon />
+        </Button>
+        {tokens?.map(({ value, isSelected }) => (
+          <IconButton
+            key={value}
+            ariaLabel={value}
+            isActive={isSelected}
+            className="px- !py-0 text-sm"
+            onClick={() => handleTokenSelect(value, isSelected)}
+          >
+            {value}
+          </IconButton>
+        ))}
+      </div>
     </div>
   )
 }

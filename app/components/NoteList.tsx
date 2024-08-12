@@ -15,7 +15,7 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
     <div
       className={classnames(
         'w-full',
-        'p-5',
+        'md:p-4 p-3',
         'bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800'
       )}
       key={note.id}

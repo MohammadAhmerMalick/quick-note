@@ -3,6 +3,7 @@ import FiLogInIcon from './FiLogInIcon'
 import FiFiSunIcon from './FiFiSunIcon'
 import FiFiMoonIcon from './FiFiMoonIcon'
 import FiFolderIcon from './FiFolderIcon'
+import BsTogglesIcon from './BsTogglesIcon'
 import FiFiMonitorIcon from './FiFiMonitorIcon'
 import CloudUploadIcon from './CloudUploadIcon'
 import AiOutlineReadIcon from './AiOutlineReadIcon'
@@ -18,6 +19,7 @@ export {
   FiFiSunIcon,
   FiFiMoonIcon,
   FiFolderIcon,
+  BsTogglesIcon,
   CloudUploadIcon,
   FiFiMonitorIcon,
   AiOutlineReadIcon,
