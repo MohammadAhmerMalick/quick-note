@@ -3,6 +3,7 @@
 import { toast } from 'react-toastify'
 import { useCallback, useEffect, useState } from 'react'
 import Input from '@/app/components/Input'
+import Button from '@/app/components/Button'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/app/components/NoteList'
 import TokenFilter from '@/app/components/TokenFilter'
@@ -157,12 +158,18 @@ const NotesList = () => {
           labelClassName="w-full"
           onChange={({ value }) => setSearch(value)}
         />
+
         <div className="flex justify-end gap-1">
           <NoteStateSelector
             selectedState={selectedState}
             setSelectedState={setSelectedState}
           />
+
           <NotesLayoutSelector layout={layout} setLayout={setLayout} />
+
+          <Button className="flex items-center justify-center px-2 min-w-9 max-w-max">
+            {notes.length}
+          </Button>
         </div>
       </div>
 
