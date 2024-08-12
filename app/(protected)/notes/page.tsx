@@ -1,10 +1,11 @@
 'use client'
 
 import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Input from '@/app/components/Input'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/app/components/NoteList'
+import TokenFilter from '@/app/components/TokenFilter'
 import restoreNoteAction from '@/app/actions/restoreNoteAction'
 import NoteStateSelector from '@/app/components/NoteStateSelector'
 import softDeleteNoteAction from '@/app/actions/softDeleteNoteAction'
@@ -16,12 +17,18 @@ import getNotesAction, {
 let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'
 
+interface Tokens {
+  value: string
+  isSelected: boolean
+}
+
 const NotesList = () => {
   const [search, setSearch] = useState('')
   const [counter, setCounter] = useState<number>(0)
   const [layout, setLayout] = useState<'card' | 'list'>('list')
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
+  const [tokens, setTokens] = useState<Tokens[]>()
 
   // fetch request
   const fetchNotes = async () => {
@@ -82,6 +89,18 @@ const NotesList = () => {
     }
   }
 
+  const inSearch = useCallback(
+    (note: GetNotesActionReutrn) => {
+      const string = search.toLocaleLowerCase()
+
+      return (
+        note.title.toLocaleLowerCase().includes(string) ||
+        note.description.toLocaleLowerCase().includes(string)
+      )
+    },
+    [search]
+  )
+
   useEffect(() => {
     fetchNotes()
   }, [])
@@ -89,22 +108,42 @@ const NotesList = () => {
   useEffect(() => {
     let newNoteList: GetNotesActionReutrn[] = []
 
-    const inSearch = (note: GetNotesActionReutrn) => {
-      const string = search.toLocaleLowerCase()
+    const inTokenFilter = (note: GetNotesActionReutrn) => {
+      const selectedTokens = tokens?.filter((t) => t.isSelected)
+      if (!selectedTokens?.length) return true // if no token selected then return true(behave as all are selected)
 
-      return (
-        note.title.toLocaleLowerCase().includes(string) ||
-        note.description.toLocaleLowerCase().includes(string)
-      )
+      return selectedTokens.filter(
+        (token) =>
+          token.isSelected &&
+          (note.description.toLowerCase().includes(token.value) ||
+            note.title.toLowerCase().includes(token.value))
+      ).length
     }
 
     if (selectedState === 'notDeleted')
-      newNoteList = dbData.filter((note) => !note.deletedAt && inSearch(note))
+      newNoteList = dbData.filter(
+        (note) => !note.deletedAt && inSearch(note) && inTokenFilter(note)
+      )
     else if (selectedState === 'deleted')
-      newNoteList = dbData.filter((note) => note.deletedAt && inSearch(note))
-
+      newNoteList = dbData.filter(
+        (note) => note.deletedAt && inSearch(note) && inTokenFilter(note)
+      )
     setNotes(newNoteList)
-  }, [counter, search, selectedState])
+  }, [counter, selectedState, tokens, inSearch])
+
+  useEffect(() => {
+    const filterSet = new Set(
+      dbData
+        .filter((note) => inSearch(note))
+        .map((t) => t.description.toLowerCase())
+        .join(' ')
+        .replace(/[^a-zA-Z !?]+/g, ' ')
+        .split(' ')
+    )
+
+    const fitlerArray = Array.from(filterSet).filter((c) => c.length > 2)
+    setTokens(fitlerArray.map((c) => ({ value: c, isSelected: false })))
+  }, [counter, inSearch])
 
   return (
     <main className="mt-4">
@@ -124,6 +163,7 @@ const NotesList = () => {
           <NotesLayoutSelector layout={layout} setLayout={setLayout} />
         </div>
       </div>
+      <TokenFilter tokens={tokens} setTokens={setTokens} />
       <div className="flex gap-5 flex-wrap justify-center mt-4">
         {notes.map((note) =>
           layout === 'card' ? (
