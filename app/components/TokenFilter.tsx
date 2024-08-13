@@ -37,7 +37,7 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
   return (
     <div
       className={classnames(
-        'overflow-y-auto mt-4',
+        'overflow-y-auto mt-4 duration-300',
         isExpanded ? 'h-40' : 'h-6'
       )}
     >
@@ -53,7 +53,7 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
             key={value}
             ariaLabel={value}
             isActive={isSelected}
-            className="px- !py-0 text-sm"
+            className="px- !py-0 text-sm text-gray-700 dark:text-gray-400"
             onClick={() => handleTokenSelect(value, isSelected)}
           >
             {value}
