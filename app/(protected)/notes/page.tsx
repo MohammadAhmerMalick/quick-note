@@ -121,10 +121,11 @@ const NotesList = () => {
       ).length
     }
 
-    newNoteList = dbData.filter((note) =>
-      selectedState === 'deleted'
-        ? note.deletedAt
-        : !note.deletedAt && inSearch(note) && inTokenFilter(note)
+    newNoteList = dbData.filter(
+      (note) =>
+        (selectedState === 'deleted' ? note.deletedAt : !note.deletedAt) &&
+        inSearch(note) &&
+        inTokenFilter(note)
     )
 
     setNotes(newNoteList)
@@ -133,10 +134,10 @@ const NotesList = () => {
   useEffect(() => {
     const filterSet = new Set(
       dbData
-        .filter((note) =>
-          inSearch(note) && selectedState === 'deleted'
-            ? note.deletedAt
-            : !note.deletedAt
+        .filter(
+          (note) =>
+            (selectedState === 'deleted' ? note.deletedAt : !note.deletedAt) &&
+            inSearch(note)
         )
         .map((note) => note.description.toLowerCase())
         .join(' ')
