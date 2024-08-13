@@ -16,7 +16,8 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
       className={classnames(
         'w-full',
         'md:p-4 p-3',
-        'bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800'
+        'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
+        'border border-transparent hover:border-yellow-500 hover:ring-yellow-200 hover:dark:ring-yellow-950 hover:ring-1 hover:bg-white hover:dark:bg-neutral-850'
       )}
       key={note.id}
     >
@@ -31,7 +32,7 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
         <div className="overflow-hidden">
           <h5
             className={classnames(
-              'font-bold text-gray-900 dark:text-neutral-200 line-clamp-2',
+              'font-semibold text-neutral-900 dark:text-neutral-200 line-clamp-2 ',
               'line-clamp-2 overflow-hidden',
               'mb-2'
             )}
@@ -40,7 +41,7 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
           </h5>
           <p
             className={classnames(
-              'text-sm font-normal text-gray-700 dark:text-gray-400',
+              'text-sm font-normal text-neutral-800 dark:text-neutral-300',
               'line-clamp-3 overflow-hidden'
             )}
           >
