@@ -167,7 +167,7 @@ const NotesList = () => {
 
           <NotesLayoutSelector layout={layout} setLayout={setLayout} />
 
-          <Button className="flex items-center justify-center px-2 min-w-9 max-w-max">
+          <Button className="flex items-center justify-center !px-1 min-w-9 max-w-max">
             {notes.length}
           </Button>
         </div>
