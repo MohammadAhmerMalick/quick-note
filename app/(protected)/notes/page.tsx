@@ -153,6 +153,7 @@ const NotesList = () => {
     <main className="mt-4">
       <div className="flex gap-1">
         <Input
+          isFocused
           id="search"
           value={search}
           placeholder="Search"
