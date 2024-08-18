@@ -38,6 +38,7 @@ const Login = () => {
       >
         <div className="mb-6">
           <Input
+            isFocused
             id="email"
             value={email}
             labelText="Email"

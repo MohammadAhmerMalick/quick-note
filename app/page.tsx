@@ -1,7 +1,7 @@
 'use client'
 
 import { toast } from 'react-toastify'
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 
 import Input from '@/components/Input'
 import Button from '@/components/Button'
@@ -10,6 +10,8 @@ import FileDropAera from '@/components/FileDropAera'
 import storeNoteAction from '@/actions/storeNoteAction'
 
 export default function Home() {
+  const TITLE_INPUT = useRef<HTMLInputElement | null>(null)
+
   const [title, setTitle] = useState('')
   const [fileValue, setFileValue] = useState('')
   const [file, setFile] = useState<File | ''>('')
@@ -47,6 +49,7 @@ export default function Home() {
       if (response.status === 'success') {
         toast.success(response.message)
         resetForm()
+        TITLE_INPUT.current?.focus()
       }
 
       // on reject
@@ -59,6 +62,11 @@ export default function Home() {
       setIsSubmitting(false)
     }
   }
+
+  useEffect(() => {
+    TITLE_INPUT.current?.focus()
+  }, [])
+
   return (
     <main>
       <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-0 mt-4 md:mb-8 mb-2">
@@ -75,6 +83,7 @@ export default function Home() {
             value={title}
             labelText="Title"
             placeholder="Title"
+            inputRef={TITLE_INPUT}
             onChange={({ value }) => setTitle(value)}
           />
         </div>
