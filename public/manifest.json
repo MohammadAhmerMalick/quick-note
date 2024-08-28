@@ -1,0 +1,42 @@
+{
+  "name": "Quick Note",
+  "short_name": "Quick Note",
+  "theme_color": "#eab308",
+  "background_color": "#1f1f1f",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "150x150",
+      "type": "image/svg",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/wide-screenshot.png",
+      "sizes": "2133x1200",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    },
+    {
+      "src": "/narrow-screenshot.png",
+      "sizes": "1170x2532",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Application"
+    }
+  ],
+  "splash_pages": null
+}
