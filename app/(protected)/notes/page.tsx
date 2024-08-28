@@ -3,6 +3,7 @@
 import { toast } from 'react-toastify'
 import { useCallback, useEffect, useState } from 'react'
 import Input from '@/app/components/Input'
+import Modal from '@/app/components/Modal'
 import Button from '@/app/components/Button'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/app/components/NoteList'
@@ -30,6 +31,7 @@ const NotesList = () => {
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
   const [tokens, setTokens] = useState<Tokens[]>()
+  const [modalNote, setModalNote] = useState<GetNotesActionReutrn | null>(null)
 
   // fetch request
   const fetchNotes = async () => {
@@ -151,6 +153,14 @@ const NotesList = () => {
 
   return (
     <main className="mt-4">
+      {modalNote && (
+        <Modal
+          note={modalNote}
+          deleteNote={deleteNote}
+          restoreNote={restoreNote}
+          onClose={() => setModalNote(null)}
+        />
+      )}
       <div className="flex gap-1">
         <Input
           isFocused
@@ -187,6 +197,7 @@ const NotesList = () => {
               key={note.id}
               deleteNote={deleteNote}
               restoreNote={restoreNote}
+              onClick={() => setModalNote(note)}
             />
           )
         )}

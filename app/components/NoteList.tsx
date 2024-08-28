@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { type MouseEventHandler } from 'react'
 
 import { classnames } from '@/utils'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
@@ -8,11 +9,16 @@ interface NoteListProp {
   note: GetNotesActionReutrn
   deleteNote(id: string): void
   restoreNote(id: string): void
+  onClick: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
+const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={undefined}
       className={classnames(
         'w-full',
         'md:p-4 p-3',
