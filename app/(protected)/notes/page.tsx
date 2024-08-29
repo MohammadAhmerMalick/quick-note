@@ -2,6 +2,10 @@
 
 import { toast } from 'react-toastify'
 import { useCallback, useEffect, useState } from 'react'
+
+import getNotesAction, {
+  type GetNotesActionReutrn,
+} from '@/actions/getNotesAction'
 import Input from '@/app/components/Input'
 import Modal from '@/app/components/Modal'
 import Button from '@/app/components/Button'
@@ -12,9 +16,6 @@ import restoreNoteAction from '@/app/actions/restoreNoteAction'
 import NoteStateSelector from '@/app/components/NoteStateSelector'
 import softDeleteNoteAction from '@/app/actions/softDeleteNoteAction'
 import NotesLayoutSelector from '@/app/components/NotesLayoutSelector'
-import getNotesAction, {
-  type GetNotesActionReutrn,
-} from '@/actions/getNotesAction'
 
 let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'

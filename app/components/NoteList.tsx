@@ -1,7 +1,8 @@
 import Image from 'next/image'
-import { type MouseEventHandler } from 'react'
+import type { MouseEvent, MouseEventHandler } from 'react'
 
 import { classnames } from '@/utils'
+import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 import { AiOutlineDeleteIcon, AiOutlineSaveIcon } from '@/components/icons'
 
@@ -13,6 +14,20 @@ interface NoteListProp {
 }
 
 const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
+  const onDelete = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    deleteNote(note.id)
+  }
+
+  const onRestore = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    restoreNote(note.id)
+  }
+
   return (
     <div
       role="button"
@@ -21,6 +36,7 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
       onKeyDown={undefined}
       className={classnames(
         'w-full',
+        'cursor-pointer',
         'md:p-4 p-3',
         'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
         'border border-transparent hover:border-yellow-500 hover:ring-yellow-200 hover:dark:ring-yellow-950 hover:ring-1 hover:bg-white hover:dark:bg-neutral-850'
@@ -67,23 +83,18 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
           {!note.deletedAt ? (
             <button
               aria-label="Delete Note"
-              className="border-neutral-850 text-white border bg-red-300 dark:bg-red-600 p-1 rounded-md"
-              onClick={() => deleteNote(note.id)}
+              className="border-red-500 dark:border-neutral-850 text-white border bg-red-600 p-1 rounded-md shadow dark:shadow-transparent"
+              onClick={onDelete}
             >
               <AiOutlineDeleteIcon />
             </button>
           ) : (
-            <button
-              aria-label="Restore Note"
-              className={classnames(
-                'p-1 shadow',
-                ' rounded-md border-white dark:border-neutral-600 border',
-                'bg-white dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600  focus:bg-neutral-100 dark:focus:bg-neutral-600'
-              )}
-              onClick={() => restoreNote(note.id)}
+            <IconButton
+              onClick={onRestore}
+              className="text-neutral-600 dark:text-neutral-50 !p-1"
             >
               <AiOutlineSaveIcon />
-            </button>
+            </IconButton>
           )}
         </div>
       </div>

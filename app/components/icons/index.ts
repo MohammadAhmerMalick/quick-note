@@ -8,6 +8,7 @@ import FiFiMonitorIcon from './FiFiMonitorIcon'
 import CloudUploadIcon from './CloudUploadIcon'
 import AiOutlineReadIcon from './AiOutlineReadIcon'
 import AiOutlineSaveIcon from './AiOutlineSaveIcon'
+import AiOutlineCloseIcon from './AiOutlineCloseIcon'
 import AiOutlineDeleteIcon from './AiOutlineDeleteIcon'
 import AiOutlineDatabaseIcon from './AiOutlineDatabaseIcon'
 import AiOutlineCreditCardIcon from './AiOutlineCreditCardIcon'
@@ -24,6 +25,7 @@ export {
   FiFiMonitorIcon,
   AiOutlineReadIcon,
   AiOutlineSaveIcon,
+  AiOutlineCloseIcon,
   AiOutlineDeleteIcon,
   AiOutlineDatabaseIcon,
   AiOutlineCreditCardIcon,

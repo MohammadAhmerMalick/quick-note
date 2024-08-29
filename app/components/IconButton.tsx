@@ -2,7 +2,7 @@ import type { MouseEventHandler, ReactNode } from 'react'
 import { classnames } from '@/utils'
 
 interface IconButtonProps {
-  isActive: boolean
+  isActive?: boolean
   disabled?: boolean
   ariaLabel?: string
   className?: string
@@ -13,10 +13,10 @@ interface IconButtonProps {
 
 const IconButton = ({
   children,
-  isActive,
   ariaLabel,
   className,
   type = 'button',
+  isActive = false,
   disabled = false,
   onClick,
 }: IconButtonProps) => {

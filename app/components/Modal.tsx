@@ -1,7 +1,13 @@
-import React from 'react'
+import { type MouseEvent } from 'react'
 
+import {
+  AiOutlineSaveIcon,
+  AiOutlineCloseIcon,
+  AiOutlineDeleteIcon,
+} from '@/components/icons'
 import { classnames } from '@/utils'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
+import IconButton from './IconButton'
 
 interface ModalProp {
   note: GetNotesActionReutrn
@@ -11,67 +17,78 @@ interface ModalProp {
 }
 
 const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
+  const onContainerClick = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => e.currentTarget === e.target && onClose()
+
+  const onDelete = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    onClose()
+    deleteNote(note.id)
+  }
+
+  const onRestore = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    onClose()
+    restoreNote(note.id)
+  }
+
   return (
     <div
-      tabIndex={-1}
-      className="overflow-auto fixed top-0 bottom-0 right-0 left-0 z-50 justify-center items-center w-full h-full grid place-items-center backdrop-blur-sm md:p-4 p-3 bg-neutral-50/40 dark:bg-neutral-950/40"
+      role="button"
+      tabIndex={0}
+      onKeyDown={undefined}
+      onClick={onContainerClick}
+      className="fixed top-0 bottom-0 right-0 left-0 z-50 justify-center items-center w-full h-full grid place-items-center backdrop-blur-sm md:p-4 p-3 bg-neutral-50/40 dark:bg-neutral-950/40"
     >
       <div
         className={classnames(
-          'w-full',
-          'md:p-5 p-3',
-          'bg-white/10 rounded-lg shadow md:mt-0 dark:bg-neutral-850',
+          'grid max-h-full grid-rows-1',
+          'overflow-hidden',
+          'md:p-5 md:pr-2 p-3 pr-1',
+          'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
           'border border-transparent'
         )}
       >
-        <div className="flex items-center justify-between border-b rounded-t dark:border-gray-600">
-          <h5
-            className={classnames(
-              'font-semibold text-neutral-900 dark:text-neutral-200 line-clamp-2 ',
-              'line-clamp-2 overflow-hidden',
-              'mb-4'
-            )}
-          >
+        <div className="overflow-auto pr-2">
+          <h5 className="font-semibold text-neutral-900 dark:text-neutral-200 border-b rounded-t dark:border-gray-600 pb-4">
             {note.title}
           </h5>
-          <button
-            type="button"
-            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          <p
+            className={classnames(
+              'text-sm font-normal text-neutral-800 dark:text-neutral-300 whitespace-pre-line',
+              'py-4'
+            )}
           >
-            <svg
-              className="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
+            {note.description}
+          </p>
+          <div className="flex gap-2 items-center justify-end pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+            {!note.deletedAt ? (
+              <button
+                aria-label="Delete Note"
+                className="border-red-500 dark:border-neutral-850 text-white border bg-red-600 p-1 pr-2 rounded-md shadow dark:shadow-transparent flex items-center justify-center gap-1"
+                onClick={onDelete}
+              >
+                <AiOutlineDeleteIcon /> <span>Delete</span>
+              </button>
+            ) : (
+              <IconButton
+                onClick={onRestore}
+                className="flex items-center justify-center gap-1 text-neutral-600 dark:text-neutral-50 !p-1 !pr-2"
+              >
+                <AiOutlineSaveIcon /> <span>Restore</span>
+              </IconButton>
+            )}
+
+            <IconButton
+              onClick={onClose}
+              className="flex items-center justify-center gap-1 text-neutral-600 dark:text-neutral-50 !p-1 !pr-2"
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
-            <span className="sr-only">Close modal</span>
-          </button>
-        </div>
-        <p
-          className={classnames(
-            'text-sm font-normal text-neutral-800 dark:text-neutral-300',
-            'py-4'
-          )}
-        >
-          {note.description}
-        </p>
-        <div className="flex items-center py-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-          <button
-            onClick={onClose}
-            type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Close
-          </button>
+              <AiOutlineCloseIcon /> <span>Close</span>
+            </IconButton>
+          </div>
         </div>
       </div>
     </div>
