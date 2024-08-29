@@ -1,10 +1,15 @@
 import Image from 'next/image'
+import { toast } from 'react-toastify'
 import type { MouseEvent, MouseEventHandler } from 'react'
 
+import {
+  AiOutlineSaveIcon,
+  AiOutlineCopyIcon,
+  AiOutlineDeleteIcon,
+} from '@/components/icons'
 import { classnames } from '@/utils'
 import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
-import { AiOutlineDeleteIcon, AiOutlineSaveIcon } from '@/components/icons'
 
 interface NoteListProp {
   note: GetNotesActionReutrn
@@ -26,6 +31,14 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
   ) => {
     e.stopPropagation()
     restoreNote(note.id)
+  }
+
+  const copyDescriptionToClipboard = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    toast.info('copied')
+    navigator.clipboard.writeText(note.description)
   }
 
   return (
@@ -79,7 +92,7 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
             alt={note.title}
           />
         )}
-        <div className="flex flex-col justify-end">
+        <div className="flex gap-2 flex-col justify-end">
           {!note.deletedAt ? (
             <button
               aria-label="Delete Note"
@@ -90,12 +103,21 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
             </button>
           ) : (
             <IconButton
+              bgColor="green"
               onClick={onRestore}
-              className="text-neutral-600 dark:text-neutral-50 !p-1"
+              className="text-neutral-900 !p-1 !pr-2"
             >
               <AiOutlineSaveIcon />
             </IconButton>
           )}
+          <IconButton
+            isActive
+            bgColor="yellow"
+            onClick={copyDescriptionToClipboard}
+            className="text-neutral-900 !p-1 !pr-2"
+          >
+            <AiOutlineCopyIcon />
+          </IconButton>
         </div>
       </div>
     </div>

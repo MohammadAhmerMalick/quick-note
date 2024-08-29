@@ -1,13 +1,14 @@
 import { type MouseEvent } from 'react'
 
 import {
+  AiOutlineCopyIcon,
   AiOutlineSaveIcon,
   AiOutlineCloseIcon,
   AiOutlineDeleteIcon,
 } from '@/components/icons'
 import { classnames } from '@/utils'
+import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
-import IconButton from './IconButton'
 
 interface ModalProp {
   note: GetNotesActionReutrn
@@ -75,16 +76,27 @@ const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
               </button>
             ) : (
               <IconButton
+                bgColor="green"
                 onClick={onRestore}
-                className="flex items-center justify-center gap-1 text-neutral-600 dark:text-neutral-50 !p-1 !pr-2"
+                className="flex items-center justify-center gap-1 !p-1 !pr-2"
               >
                 <AiOutlineSaveIcon /> <span>Restore</span>
               </IconButton>
             )}
 
             <IconButton
+              isActive
+              bgColor="yellow"
+              onClick={() => navigator.clipboard.writeText(note.description)}
+              className="flex items-center justify-center gap-1 !p-1 !pr-2"
+            >
+              <AiOutlineCopyIcon /> <span>Copy Description</span>
+            </IconButton>
+
+            <IconButton
+              bgColor="gray"
               onClick={onClose}
-              className="flex items-center justify-center gap-1 text-neutral-600 dark:text-neutral-50 !p-1 !pr-2"
+              className="flex items-center justify-center gap-1 text-neutral-50 !p-1 !pr-2"
             >
               <AiOutlineCloseIcon /> <span>Close</span>
             </IconButton>
