@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { Inter } from 'next/font/google'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { classnames } from '@/utils'
 import Firebase from '@/lib/firebase'
@@ -30,9 +30,10 @@ export const metadata: Metadata = {
   generator: 'Next.js',
   manifest: '/manifest.json',
   keywords: ['nextjs', 'next14', 'pwa', 'next-pwa'],
-  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#fff' }],
-  viewport:
-    'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
+}
+
+export const viewport: Viewport = {
+  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#eab308' }],
 }
 
 export default function RootLayout({
