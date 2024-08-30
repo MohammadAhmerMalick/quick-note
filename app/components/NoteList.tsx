@@ -1,20 +1,55 @@
 import Image from 'next/image'
+import { toast } from 'react-toastify'
+import type { MouseEvent, MouseEventHandler } from 'react'
 
+import {
+  AiOutlineSaveIcon,
+  AiOutlineCopyIcon,
+  AiOutlineDeleteIcon,
+} from '@/components/icons'
 import { classnames } from '@/utils'
+import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
-import { AiOutlineDeleteIcon, AiOutlineSaveIcon } from '@/components/icons'
 
 interface NoteListProp {
   note: GetNotesActionReutrn
   deleteNote(id: string): void
   restoreNote(id: string): void
+  onClick: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
+const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
+  const onDelete = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    deleteNote(note.id)
+  }
+
+  const onRestore = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    restoreNote(note.id)
+  }
+
+  const copyDescriptionToClipboard = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    toast.info('copied')
+    navigator.clipboard.writeText(note.description)
+  }
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={undefined}
       className={classnames(
         'w-full',
+        'cursor-pointer',
         'md:p-4 p-3',
         'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
         'border border-transparent hover:border-yellow-500 hover:ring-yellow-200 hover:dark:ring-yellow-950 hover:ring-1 hover:bg-white hover:dark:bg-neutral-850'
@@ -57,28 +92,29 @@ const NoteList = ({ note, deleteNote, restoreNote }: NoteListProp) => {
             alt={note.title}
           />
         )}
-        <div className="flex flex-col justify-end">
+        <div className="flex gap-2 flex-col justify-end">
           {!note.deletedAt ? (
-            <button
-              aria-label="Delete Note"
-              className="border-neutral-850 text-white border bg-red-300 dark:bg-red-600 p-1 rounded-md"
-              onClick={() => deleteNote(note.id)}
+            <IconButton
+              onClick={onDelete}
+              className="!p-1 !pr-2 !bg-red-600 !border-red-900 text-white"
             >
               <AiOutlineDeleteIcon />
-            </button>
+            </IconButton>
           ) : (
-            <button
-              aria-label="Restore Note"
-              className={classnames(
-                'p-1 shadow',
-                ' rounded-md border-white dark:border-neutral-600 border',
-                'bg-white dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600  focus:bg-neutral-100 dark:focus:bg-neutral-600'
-              )}
-              onClick={() => restoreNote(note.id)}
+            <IconButton
+              onClick={onRestore}
+              className="!p-1 !pr-2 !bg-green-500 !border-green-900"
             >
               <AiOutlineSaveIcon />
-            </button>
+            </IconButton>
           )}
+          <IconButton
+            isActive
+            onClick={copyDescriptionToClipboard}
+            className="!p-1 !pr-2 !bg-yellow-500 !border-yellow-900"
+          >
+            <AiOutlineCopyIcon />
+          </IconButton>
         </div>
       </div>
     </div>

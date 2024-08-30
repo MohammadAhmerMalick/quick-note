@@ -2,7 +2,12 @@
 
 import { toast } from 'react-toastify'
 import { useCallback, useEffect, useState } from 'react'
+
+import getNotesAction, {
+  type GetNotesActionReutrn,
+} from '@/actions/getNotesAction'
 import Input from '@/app/components/Input'
+import Modal from '@/app/components/Modal'
 import Button from '@/app/components/Button'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/app/components/NoteList'
@@ -11,9 +16,6 @@ import restoreNoteAction from '@/app/actions/restoreNoteAction'
 import NoteStateSelector from '@/app/components/NoteStateSelector'
 import softDeleteNoteAction from '@/app/actions/softDeleteNoteAction'
 import NotesLayoutSelector from '@/app/components/NotesLayoutSelector'
-import getNotesAction, {
-  type GetNotesActionReutrn,
-} from '@/actions/getNotesAction'
 
 let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'
@@ -30,6 +32,7 @@ const NotesList = () => {
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
   const [tokens, setTokens] = useState<Tokens[]>()
+  const [modalNote, setModalNote] = useState<GetNotesActionReutrn | null>(null)
 
   // fetch request
   const fetchNotes = async () => {
@@ -151,6 +154,14 @@ const NotesList = () => {
 
   return (
     <main className="mt-4">
+      {modalNote && (
+        <Modal
+          note={modalNote}
+          deleteNote={deleteNote}
+          restoreNote={restoreNote}
+          onClose={() => setModalNote(null)}
+        />
+      )}
       <div className="flex gap-1">
         <Input
           isFocused
@@ -187,6 +198,7 @@ const NotesList = () => {
               key={note.id}
               deleteNote={deleteNote}
               restoreNote={restoreNote}
+              onClick={() => setModalNote(note)}
             />
           )
         )}

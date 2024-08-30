@@ -25,6 +25,7 @@ const NoteStateSelector = ({
         ariaLabel={selectedState}
         onClick={() => setSelectedState('deleted')}
         isActive={selectedState === 'deleted'}
+        className="text-neutral-600 dark:text-neutral-50"
       >
         <AiOutlineDeleteIcon />
       </IconButton>
