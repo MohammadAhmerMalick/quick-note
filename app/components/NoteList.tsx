@@ -94,27 +94,24 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
         )}
         <div className="flex gap-2 flex-col justify-end">
           {!note.deletedAt ? (
-            <button
-              aria-label="Delete Note"
-              className="border-red-500 dark:border-neutral-850 text-white border bg-red-600 p-1 rounded-md shadow dark:shadow-transparent"
+            <IconButton
               onClick={onDelete}
+              className="!p-1 !pr-2 !bg-red-600 !border-red-900 text-white"
             >
               <AiOutlineDeleteIcon />
-            </button>
+            </IconButton>
           ) : (
             <IconButton
-              bgColor="green"
               onClick={onRestore}
-              className="text-neutral-900 !p-1 !pr-2"
+              className="!p-1 !pr-2 !bg-green-500 !border-green-900"
             >
               <AiOutlineSaveIcon />
             </IconButton>
           )}
           <IconButton
             isActive
-            bgColor="yellow"
             onClick={copyDescriptionToClipboard}
-            className="text-neutral-900 !p-1 !pr-2"
+            className="!p-1 !pr-2 !bg-yellow-500 !border-yellow-900"
           >
             <AiOutlineCopyIcon />
           </IconButton>

@@ -67,36 +67,31 @@ const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
           </p>
           <div className="flex gap-2 items-center justify-end pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
             {!note.deletedAt ? (
-              <button
-                aria-label="Delete Note"
-                className="border-red-500 dark:border-neutral-850 text-white border bg-red-600 p-1 pr-2 rounded-md shadow dark:shadow-transparent flex items-center justify-center gap-1"
+              <IconButton
                 onClick={onDelete}
+                className="flex items-center justify-center gap-1 !p-1 !pr-2 !bg-red-600 !border-red-900 text-white"
               >
                 <AiOutlineDeleteIcon /> <span>Delete</span>
-              </button>
+              </IconButton>
             ) : (
               <IconButton
-                bgColor="green"
                 onClick={onRestore}
-                className="flex items-center justify-center gap-1 !p-1 !pr-2"
+                className="flex items-center justify-center gap-1 !p-1 !pr-2 !bg-green-500 !border-green-900"
               >
                 <AiOutlineSaveIcon /> <span>Restore</span>
               </IconButton>
             )}
 
             <IconButton
-              isActive
-              bgColor="yellow"
               onClick={() => navigator.clipboard.writeText(note.description)}
-              className="flex items-center justify-center gap-1 !p-1 !pr-2"
+              className="flex items-center justify-center gap-1 !p-1 !pr-2 !bg-yellow-500 !border-yellow-900"
             >
-              <AiOutlineCopyIcon /> <span>Copy Description</span>
+              <AiOutlineCopyIcon /> <span>Copy</span>
             </IconButton>
 
             <IconButton
-              bgColor="gray"
               onClick={onClose}
-              className="flex items-center justify-center gap-1 text-neutral-50 !p-1 !pr-2"
+              className="flex items-center justify-center gap-1 !p-1 !pr-2 !bg-gray-400  !border-gray-700"
             >
               <AiOutlineCloseIcon /> <span>Close</span>
             </IconButton>
