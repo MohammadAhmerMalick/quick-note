@@ -5,6 +5,8 @@ import type { Metadata, Viewport } from 'next'
 import { classnames } from '@/utils'
 import Firebase from '@/lib/firebase'
 import Toast from '@/components/Toast'
+import NavLInks from '@/components/NavLInks'
+import ThemeSelector from '@/components/ThemeSelector'
 
 import './globals.css'
 
@@ -52,7 +54,12 @@ export default function RootLayout({
         theme.toLowerCase()
       )}
     >
-      <body className={inter.className}>
+      <body className={(inter.className, 'p-3')}>
+        <header className="flex justify-between items-center gap-1 flex-wrap mb-3">
+          <NavLInks />
+          <ThemeSelector />
+        </header>
+
         {children}
         <Toast />
       </body>

@@ -68,52 +68,38 @@ export default function Home() {
   }, [])
 
   return (
-    <main>
-      <h1 className="md:text-4xl text-xl font-semibold text-neutral-950 dark:text-neutral-50 text-center md:mt-0 mt-4 md:mb-8 mb-2">
-        Quick Note
-      </h1>
-      <form
-        onSubmit={onSubmit}
-        className="max-w-xl md:p-8 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800"
-      >
-        <div className="mb-6">
-          <Input
-            id="title"
-            isRequired
-            value={title}
-            labelText="Title"
-            placeholder="Title"
-            inputRef={TITLE_INPUT}
-            onChange={({ value }) => setTitle(value)}
-          />
-        </div>
-        <div className="mb-6">
-          <Textarea
-            id="description"
-            value={description}
-            labelText="Description"
-            placeholder="Description"
-            onChange={({ value }) => setDescription(value)}
-          />
-        </div>
+    <form
+      onSubmit={onSubmit}
+      className="max-w-xl md:p-8 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800"
+    >
+      <div className="mb-6">
+        <Input
+          id="title"
+          isRequired
+          value={title}
+          labelText="Title"
+          placeholder="Title"
+          inputRef={TITLE_INPUT}
+          onChange={({ value }) => setTitle(value)}
+        />
+      </div>
+      <div className="mb-6">
+        <Textarea
+          id="description"
+          value={description}
+          labelText="Description"
+          placeholder="Description"
+          onChange={({ value }) => setDescription(value)}
+        />
+      </div>
 
-        <div className="mb-6">
-          <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
-        </div>
+      <div className="mb-6">
+        <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
+      </div>
 
-        <Button disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting' : 'Submit'}
-        </Button>
-      </form>
-      <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2 mt-1">
-        Powered by:{' '}
-        <a
-          href="https://www.mohammadahmermalick.com"
-          className="text-neutral-950 dark:text-neutral-400 border-b border-neutral-500"
-        >
-          Mohammad Ahmer Malick
-        </a>
-      </p>
-    </main>
+      <Button disabled={isSubmitting}>
+        {isSubmitting ? 'Submitting' : 'Submit'}
+      </Button>
+    </form>
   )
 }
