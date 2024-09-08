@@ -60,7 +60,7 @@ const ThemeSelector = () => {
             selected === option.id
               ? 'shadow border-transparent dark:border-neutral-600 bg-white dark:bg-neutral-800 z-10 sm:flex hidden'
               : 'border-transparent',
-            'md:p-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-600 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-full border text-ss'
+            'p-2 hover:bg-neutral-100 dark:hover:bg-neutral-600 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-full border'
           )}
         >
           <option.icon />
