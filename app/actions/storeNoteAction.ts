@@ -149,7 +149,7 @@ const storeNoteAction = async (
 
     const res = await db.collection('notes').doc(randomUUID()).set(newNote)
 
-    updateNotesCountAction(noteCount + 1)
+    updateNotesCountAction((noteCount || 0) + 1)
 
     // Response on success
     console.log({ storeNoteAction: 'Note created' })
