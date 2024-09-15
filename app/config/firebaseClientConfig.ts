@@ -1,5 +1,3 @@
-'use server'
-
 const firebaseConfig = () => ({
   apiKey: process.env.FIREBASE_CLIENT_API_KEY,
   authDomain: process.env.FIREBASE_CLIENT_AUTH_DOMAIN,
