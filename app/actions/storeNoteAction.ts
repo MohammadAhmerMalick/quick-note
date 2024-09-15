@@ -7,10 +7,12 @@ import { writeFile } from 'fs/promises'
 import { z as validate, ZodError } from 'zod'
 import { getStorage } from 'firebase-admin/storage'
 import { Timestamp, getFirestore } from 'firebase-admin/firestore'
+import updateNotesCountAction from '@/actions/updateNotesCountAction'
 import {
-  ACCEPTED_IMAGE_TYPES,
   MAX_FILE_SIZE,
+  ACCEPTED_IMAGE_TYPES,
   NOTE_FILES_FOLDER_NAME,
+  NUMBER_OF_ALLWOED_NOTES_PAR_DAY,
 } from '@/config/constants'
 
 const validateInputFields = (
@@ -61,6 +63,23 @@ const storeFileLocally = async (file: File, destinationFileName: string) => {
   await writeFile(fileLocalPath, buffer)
 
   return fileLocalPath
+}
+
+/**
+ * @returns [is note limit reached, number of existing notes this day]
+ */
+const checkifLimitReached = async () => {
+  // push the new note to firebase
+  const db = getFirestore()
+
+  const doc = db
+    .collection('notesCounter')
+    .doc(new Date().toLocaleDateString().replaceAll('/', '-'))
+  const res = await doc.get()
+  const data = await res.data()
+
+  const isLimitReached = data?.noteCount >= NUMBER_OF_ALLWOED_NOTES_PAR_DAY
+  return [isLimitReached, data?.noteCount]
 }
 
 interface SuccessRes {
@@ -123,7 +142,14 @@ const storeNoteAction = async (
 
     // push the new note to firebase
     const db = getFirestore()
+
+    const [isLimitReached, noteCount] = await checkifLimitReached()
+    if (isLimitReached)
+      throw new Error('Limit reached', { cause: 'limit-reached' })
+
     const res = await db.collection('notes').doc(randomUUID()).set(newNote)
+
+    updateNotesCountAction(noteCount + 1)
 
     // Response on success
     console.log({ storeNoteAction: 'Note created' })
@@ -131,15 +157,16 @@ const storeNoteAction = async (
 
     // Response on error
     throw new Error()
-  } catch (error) {
+  } catch (error: any) {
     let messages = ['Unable to create note']
+    if (error?.cause === 'limit-reached') messages.push(error.toString())
 
     if (error instanceof ZodError)
       messages = Object.values(error.flatten().fieldErrors).map((error) =>
         error ? error[0] : ''
       )
 
-    console.log({ storeNoteAction: error })
+    console.log({ storeNoteAction: error, messages })
     return { messages, status: 'error' }
   }
 }
