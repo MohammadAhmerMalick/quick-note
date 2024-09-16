@@ -7,7 +7,7 @@ import { writeFile } from 'fs/promises'
 import { z as validate, ZodError } from 'zod'
 import { getStorage } from 'firebase-admin/storage'
 import { Timestamp, getFirestore } from 'firebase-admin/firestore'
-import updateNotesCountAction from '@/actions/updateNotesCountAction'
+import updateNotesCountLimitAction from '@/actions/updateNotesCountLimitAction'
 import {
   MAX_FILE_SIZE,
   ACCEPTED_IMAGE_TYPES,
@@ -149,7 +149,7 @@ const storeNoteAction = async (
 
     const res = await db.collection('notes').doc(randomUUID()).set(newNote)
 
-    updateNotesCountAction((noteCount || 0) + 1)
+    updateNotesCountLimitAction((noteCount || 0) + 1)
 
     // Response on success
     console.log({ storeNoteAction: 'Note created' })

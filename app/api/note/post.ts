@@ -1,4 +1,4 @@
-import storeNoteAction from '@/app/actions/storeNoteAction'
+import storeNoteAction from '@/actions/storeNoteAction'
 
 const post = async (request: Request) => {
   const formData = await request.formData()

@@ -2,7 +2,7 @@
 
 import { getAuth } from 'firebase-admin/auth'
 
-const varifyToken = async (token: string = '') => {
+const varifyTokenAction = async (token: string = '') => {
   try {
     if (!token) return false
 
@@ -16,4 +16,4 @@ const varifyToken = async (token: string = '') => {
   }
 }
 
-export default varifyToken
+export default varifyTokenAction
