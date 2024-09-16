@@ -18,6 +18,11 @@
   }
 } */
 
+::selection {
+  color: #303030;
+  background: #eab308;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
