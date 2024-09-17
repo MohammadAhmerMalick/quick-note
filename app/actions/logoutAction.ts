@@ -22,7 +22,7 @@ const logoutAction = async (): Promise<{
     console.log({ logoutAction: error })
     return {
       status: 'error',
-      messages: ['unable to logout'],
+      messages: ['Unable to logout'],
     }
   }
 }

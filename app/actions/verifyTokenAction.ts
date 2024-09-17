@@ -2,18 +2,18 @@
 
 import { getAuth } from 'firebase-admin/auth'
 
-const varifyTokenAction = async (token: string = '') => {
+const verifyTokenAction = async (token: string = '') => {
   try {
     if (!token) return false
 
     const user = await getAuth().verifyIdToken(token)
 
-    console.log({ varifyToken: !!user.user_id })
+    console.log({ verifyToken: !!user.user_id })
     return !!user.user_id
   } catch (error) {
-    console.log({ varifyToken: error })
+    console.log({ verifyToken: error })
     return false
   }
 }
 
-export default varifyTokenAction
+export default verifyTokenAction

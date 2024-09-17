@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import loginAction from '@/actions/loginAction'
 import logoutAction from '@/actions/logoutAction'
-import varifyTokenAction from '@/actions/varifyTokenAction'
+import verifyTokenAction from '@/actions/verifyTokenAction'
 
 /**
  * check if the existing token is valid
@@ -16,7 +16,7 @@ const useAuth = () => {
   const [isloading, setIsLoading] = useState(false)
 
   const verifyToken = useCallback(async (token: string) => {
-    const isVerified = await varifyTokenAction(token)
+    const isVerified = await verifyTokenAction(token)
     setIsLoggedIn(isVerified)
   }, [])
 
