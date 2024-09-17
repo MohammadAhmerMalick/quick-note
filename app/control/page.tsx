@@ -3,13 +3,13 @@
 import { toast } from 'react-toastify'
 
 import Button from '@/components/Button'
-import useIsLoggedIn from '@/hooks/useIsLoggedIn'
+import useIsLoggedIn from '@/hooks/useAuth'
 import updateNotesCountLimitAction from '@/actions/updateNotesCountLimitAction'
-import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
 import terminateFirebaseAdminAction from '@/actions/terminateFirebaseAdminAction'
+import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
 
 const Controls = () => {
-  const [isLoggedIn] = useIsLoggedIn()
+  const { isLoggedIn } = useIsLoggedIn()
 
   const terminateFirebase = async () => {
     const { status } = await terminateFirebaseAdminAction()

@@ -1,32 +1,22 @@
 'use client'
 
-import { toast } from 'react-toastify'
 import { useState, type FormEvent } from 'react'
 
+import useAuth from '@/hooks/useAuth'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import loginAction from '@/actions/loginAction'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const { isloading, login } = useAuth()
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    setIsSubmitting(true)
-
-    try {
-      const { status, messages } = await loginAction(email, password)
-      if (status === 'error')
-        messages.forEach((message) => toast[status](message))
-    } catch (error) {
-      toast.error('Unable to login')
-    } finally {
-      setIsSubmitting(false)
-    }
+    login(email, password)
   }
+
   return (
     <form
       onSubmit={onSubmit}
@@ -52,7 +42,7 @@ const Login = () => {
           onChange={({ value }) => setPassword(value)}
         />
       </div>
-      <Button disabled={isSubmitting}>Login</Button>
+      <Button disabled={isloading}>Login</Button>
     </form>
   )
 }
