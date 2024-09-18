@@ -46,7 +46,7 @@ const useAuth = () => {
     verifyToken(token)
   }, [verifyToken, pathname])
 
-  return { isLoggedIn, logOut, login, isloading }
+  return { isLoggedIn, isloading, logOut, login }
 }
 
 export default useAuth
