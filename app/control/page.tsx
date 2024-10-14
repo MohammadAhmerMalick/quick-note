@@ -3,7 +3,7 @@
 import { toast } from 'react-toastify'
 
 import Button from '@/components/Button'
-import terminateFirebaseAdminAction from '@/app/actions/terminateFirebaseAdminAction'
+import terminateFirebaseAdminAction from '@/actions/terminateFirebaseAdminAction'
 import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
 
 const Controls = () => {
