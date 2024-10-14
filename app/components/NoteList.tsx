@@ -67,7 +67,7 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
         <div className="overflow-hidden">
           <h5
             className={classnames(
-              'font-semibold text-neutral-900 dark:text-neutral-200 line-clamp-2 ',
+              'font-semibold text-neutral-900 dark:text-neutral-200',
               'line-clamp-2 overflow-hidden',
               'mb-2'
             )}

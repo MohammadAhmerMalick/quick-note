@@ -49,12 +49,11 @@ const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
           'grid max-h-full grid-rows-1',
           'overflow-hidden',
           'md:p-5 md:pr-2 p-3 pr-1',
-          'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
-          'border border-transparent'
+          'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850'
         )}
       >
         <div className="overflow-auto pr-2">
-          <h5 className="font-semibold text-neutral-900 dark:text-neutral-200 border-b rounded-t dark:border-gray-600 pb-4">
+          <h5 className="font-semibold text-neutral-900 dark:text-neutral-200 border-b border-neutral-200 dark:border-neutral-600 pb-4">
             {note.title}
           </h5>
           <p
@@ -65,7 +64,7 @@ const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
           >
             {note.description}
           </p>
-          <div className="flex gap-2 items-center justify-end pt-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+          <div className="flex gap-2 items-center justify-end pt-4 border-t border-neutral-200 dark:border-neutral-600">
             {!note.deletedAt ? (
               <IconButton
                 onClick={onDelete}
