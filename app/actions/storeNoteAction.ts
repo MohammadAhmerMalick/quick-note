@@ -8,6 +8,7 @@ import { z as validate, ZodError } from 'zod'
 import { getStorage } from 'firebase-admin/storage'
 import { Timestamp, getFirestore } from 'firebase-admin/firestore'
 import updateNotesCountLimitAction from '@/actions/updateNotesCountLimitAction'
+import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
 import {
   MAX_FILE_SIZE,
   ACCEPTED_IMAGE_TYPES,
@@ -165,6 +166,7 @@ const storeNoteAction = async (
       messages = Object.values(error.flatten().fieldErrors).map((error) =>
         error ? error[0] : ''
       )
+    else if (error.code === 'app/no-app') initializeFirebaseAdminAction()
 
     console.log({ storeNoteAction: error, messages })
     return { messages, status: 'error' }
