@@ -6,3 +6,5 @@ export const ACCEPTED_IMAGE_TYPES = [
   'image/png',
   'image/webp',
 ]
+
+export const NUMBER_OF_ALLWOED_NOTES_PAR_DAY = 20

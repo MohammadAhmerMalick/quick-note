@@ -1,7 +1,9 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { getAuth, signOut } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
+
+import Firebase from '@/lib/firebase'
 
 const logoutAction = async (): Promise<{
   status: 'success' | 'error'
@@ -10,8 +12,9 @@ const logoutAction = async (): Promise<{
   try {
     cookies().delete('token')
 
-    const auth = getAuth()
-    await signOut(auth)
+    const { app } = Firebase
+    if (app) await signOut(app)
+    else throw Error
 
     console.log({ logoutAction: 'Logged Out' })
     return {
@@ -22,7 +25,7 @@ const logoutAction = async (): Promise<{
     console.log({ logoutAction: error })
     return {
       status: 'error',
-      messages: ['unable to logout'],
+      messages: ['Unable to logout'],
     }
   }
 }

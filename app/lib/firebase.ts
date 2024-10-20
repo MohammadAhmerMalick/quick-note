@@ -1,5 +1,3 @@
-'use server'
-
 import {
   cert,
   getApp,
@@ -7,16 +5,19 @@ import {
   deleteApp,
   initializeApp,
 } from 'firebase-admin/app'
-import { getAuth } from 'firebase/auth'
+import { getAuth, type Auth } from 'firebase/auth'
 import serviceAccount from '@/config/firebaseAdminConfig'
 import firebaseConfig from '@/config/firebaseClientConfig'
 import { initializeApp as initializeAppClient } from 'firebase/app'
 
 class Firebase {
+  static app: Auth | null = null
+
   static initializeClient = () => {
     initializeAppClient(firebaseConfig())
 
     const app = getAuth()
+    this.app = app
     return app
   }
 

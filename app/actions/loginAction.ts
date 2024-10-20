@@ -29,12 +29,14 @@ const firebaseLogin = async (email: string, password: string) => {
 
   // set token in cookies
   cookies().set('token', token, { secure: true })
+  return token
 }
 
 const loginAction = async (
   email: string,
   password: string
 ): Promise<{
+  token: string
   status: 'success' | 'error'
   messages: string[]
 }> => {
@@ -43,12 +45,13 @@ const loginAction = async (
     validateInputFields(email, password)
 
     // firebase login
-    await firebaseLogin(email, password)
+    const token = await firebaseLogin(email, password)
 
     console.log({ loginAction: 'Logged in successfully' })
     return {
       status: 'success',
       messages: ['Logged in successfully'],
+      token,
     }
   } catch (error: any) {
     let messages = ['Something went wrong']
@@ -62,7 +65,7 @@ const loginAction = async (
       messages = [error.code.split('/')[1].replaceAll('-', ' ')]
 
     console.log({ loginAction: error })
-    return { messages, status: 'error' }
+    return { messages, status: 'error', token: '' }
   }
 }
 

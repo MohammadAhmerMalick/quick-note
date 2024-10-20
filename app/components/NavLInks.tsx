@@ -1,29 +1,31 @@
+'use client'
+
+import type { ElementType } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState, type ElementType } from 'react'
 
 import { classnames } from '@/utils'
-import logoutAction from '@/actions/logoutAction'
+import useIsLoggedIn from '@/hooks/useAuth'
 import { FiHomeIcon, FiLogInIcon, FiFolderIcon } from '@/components/icons'
 
 interface Links {
   text: string
   link: string
-  onClick: () => void
   icon: ElementType
+  onClick: () => void
 }
 
 const NavLInks = () => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isLoggedIn, logOut } = useIsLoggedIn()
 
   const getAuthNavAction = () =>
     isLoggedIn
       ? {
           text: 'Logout',
           link: '/logout',
-          onClick: () => logoutAction(),
+          onClick: logOut,
           icon: FiLogInIcon,
         }
       : {
@@ -48,10 +50,6 @@ const NavLInks = () => {
     },
     getAuthNavAction(),
   ]
-
-  useEffect(() => {
-    setIsLoggedIn(document.cookie.includes('token'))
-  }, [])
 
   return (
     <div className="flex sm:gap-3 gap-0.5">
