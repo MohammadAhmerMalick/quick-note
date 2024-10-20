@@ -41,7 +41,7 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
         isExpanded ? 'max-h-40' : 'max-h-6'
       )}
     >
-      <div className="flex gap-1 flex-wrap text-red-50 px-1">
+      <div className="flex gap-1 flex-wrap px-1">
         <Button
           className=" w-min !p-1"
           onClick={() => setIsExpanded(!isExpanded)}
