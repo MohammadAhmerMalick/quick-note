@@ -1,6 +1,7 @@
 'use server'
 
 import { getAuth } from 'firebase-admin/auth'
+import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
 
 const verifyTokenAction = async (token: string = '') => {
   try {
@@ -10,7 +11,9 @@ const verifyTokenAction = async (token: string = '') => {
 
     console.log({ verifyToken: !!user.user_id })
     return !!user.user_id
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'app/no-app') initializeFirebaseAdminAction()
+
     console.log({ verifyToken: error })
     return false
   }
