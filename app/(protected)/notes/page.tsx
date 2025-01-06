@@ -12,6 +12,7 @@ import Button from '@/components/Button'
 import NoteCard from '@/components/NoteCard'
 import NoteList from '@/components/NoteList'
 import TokenFilter from '@/components/TokenFilter'
+import deleteNoteAction from '@/actions/deleteNoteAction'
 import restoreNoteAction from '@/actions/restoreNoteAction'
 import NoteStateSelector from '@/components/NoteStateSelector'
 import softDeleteNoteAction from '@/actions/softDeleteNoteAction'
@@ -50,8 +51,8 @@ const NotesList = () => {
     }
   }
 
-  // delete request
-  const deleteNote = async (id: string) => {
+  // soft delete request
+  const softDeleteNote = async (id: string) => {
     try {
       const { status } = await softDeleteNoteAction(id) // delete request
 
@@ -63,6 +64,26 @@ const NotesList = () => {
             ? { ...note, deletedAt: new Date().toString() }
             : { ...note }
         )
+
+        // update the counter to update the notes list
+        setCounter((c) => c + 1)
+      } else throw new Error('Unable to delete note')
+    } catch (error) {
+      // on reject
+      console.log({ error })
+      toast.error('Unable to delete')
+    }
+  }
+
+  //  delete request
+  const deleteNote = async (id: string) => {
+    try {
+      const { status } = await deleteNoteAction(id) // delete request
+
+      // on success
+      if (status === 'success') {
+        // change the deleted state of onetime fetched data
+        dbData = dbData.filter((note) => id !== note.id)
 
         // update the counter to update the notes list
         setCounter((c) => c + 1)
@@ -157,8 +178,8 @@ const NotesList = () => {
       {modalNote && (
         <Modal
           note={modalNote}
-          deleteNote={deleteNote}
           restoreNote={restoreNote}
+          softDeleteNote={softDeleteNote}
           onClose={() => setModalNote(null)}
         />
       )}
@@ -196,8 +217,9 @@ const NotesList = () => {
             <NoteList
               note={note}
               key={note.id}
-              deleteNote={deleteNote}
-              restoreNote={restoreNote}
+              onDeleteNote={deleteNote}
+              onRestoreNote={restoreNote}
+              onSoftDeleteNote={softDeleteNote}
               onClick={() => setModalNote(note)}
             />
           )

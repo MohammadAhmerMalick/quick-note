@@ -11,13 +11,13 @@ import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 
 interface ModalProp {
-  note: GetNotesActionReutrn
-  deleteNote(id: string): void
-  restoreNote(id: string): void
   onClose(): any
+  note: GetNotesActionReutrn
+  restoreNote(id: string): void
+  softDeleteNote(id: string): void
 }
 
-const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
+const Modal = ({ note, softDeleteNote, restoreNote, onClose }: ModalProp) => {
   const onContainerClick = (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => e.currentTarget === e.target && onClose()
@@ -26,7 +26,7 @@ const Modal = ({ note, deleteNote, restoreNote, onClose }: ModalProp) => {
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     onClose()
-    deleteNote(note.id)
+    softDeleteNote(note.id)
   }
 
   const onRestore = (
