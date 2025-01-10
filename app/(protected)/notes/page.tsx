@@ -9,14 +9,12 @@ import getNotesAction, {
 import Input from '@/components/Input'
 import Modal from '@/components/Modal'
 import Button from '@/components/Button'
-import NoteCard from '@/components/NoteCard'
 import NoteList from '@/components/NoteList'
 import TokenFilter from '@/components/TokenFilter'
 import deleteNoteAction from '@/actions/deleteNoteAction'
 import restoreNoteAction from '@/actions/restoreNoteAction'
 import NoteStateSelector from '@/components/NoteStateSelector'
 import softDeleteNoteAction from '@/actions/softDeleteNoteAction'
-import NotesLayoutSelector from '@/components/NotesLayoutSelector'
 
 let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'
@@ -30,7 +28,6 @@ const NotesList = () => {
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [counter, setCounter] = useState<number>(0)
-  const [layout, setLayout] = useState<'card' | 'list'>('list')
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
   const [tokens, setTokens] = useState<Tokens[]>()
@@ -202,8 +199,6 @@ const NotesList = () => {
             setSelectedState={setSelectedState}
           />
 
-          <NotesLayoutSelector layout={layout} setLayout={setLayout} />
-
           <Button className="flex min-w-9 max-w-max items-center justify-center !px-1">
             {notes.length}
           </Button>
@@ -213,23 +208,19 @@ const NotesList = () => {
       <TokenFilter tokens={tokens} setTokens={setTokens} />
 
       <div className="mt-4 flex flex-wrap justify-center gap-3 md:gap-4">
-        {notes.map((note) =>
-          layout === 'card' ? (
-            <NoteCard note={note} key={note.id} />
-          ) : (
-            <NoteList
-              note={note}
-              key={note.id}
-              onDeleteNote={deleteNote}
-              onRestoreNote={restoreNote}
-              onSoftDeleteNote={softDeleteNote}
-              onClick={() => {
-                setModalNote(note)
-                setIsOpen(!isOpen)
-              }}
-            />
-          )
-        )}
+        {notes.map((note) => (
+          <NoteList
+            note={note}
+            key={note.id}
+            onDeleteNote={deleteNote}
+            onRestoreNote={restoreNote}
+            onSoftDeleteNote={softDeleteNote}
+            onClick={() => {
+              setModalNote(note)
+              setIsOpen(!isOpen)
+            }}
+          />
+        ))}
       </div>
     </main>
   )
