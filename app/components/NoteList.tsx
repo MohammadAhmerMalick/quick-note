@@ -13,24 +13,38 @@ import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 
 interface NoteListProp {
   note: GetNotesActionReutrn
-  deleteNote(id: string): void
-  restoreNote(id: string): void
+  onDeleteNote(id: string): void
+  onRestoreNote(id: string): void
+  onSoftDeleteNote(id: string): void
   onClick: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
-  const onDelete = (
+const NoteList = ({
+  note,
+  onClick,
+  onDeleteNote,
+  onRestoreNote,
+  onSoftDeleteNote,
+}: NoteListProp) => {
+  const onSoftDelete = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.stopPropagation()
-    deleteNote(note.id)
+    onSoftDeleteNote(note.id)
   }
 
   const onRestore = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     e.stopPropagation()
-    restoreNote(note.id)
+    onRestoreNote(note.id)
+  }
+
+  const onDelete = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation()
+    onDeleteNote(note.id)
   }
 
   const copyDescriptionToClipboard = (
@@ -67,7 +81,7 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
         <div className="overflow-hidden">
           <h5
             className={classnames(
-              'font-semibold text-neutral-900 dark:text-neutral-200',
+              'font-semibold text-neutral-900 dark:text-neutral-200 line-clamp-2 ',
               'line-clamp-2 overflow-hidden',
               'mb-2'
             )}
@@ -88,30 +102,37 @@ const NoteList = ({ note, deleteNote, restoreNote, onClick }: NoteListProp) => {
             width={100}
             height={100}
             className="object-contain rounded-md"
-            src={note.files?.[0].link}
+            src={note.files?.[0].link || '/image-placeholder.svg'}
             alt={note.title}
           />
         )}
         <div className="flex gap-2 flex-col justify-end">
           {!note.deletedAt ? (
             <IconButton
-              onClick={onDelete}
-              className="!p-1 !pr-2 !bg-red-600 !border-red-900 text-white"
+              onClick={onSoftDelete}
+              className="!p-1 !bg-orange-400 dark:bg-orange-500 border-orange-600 dark:border-orange-600"
             >
               <AiOutlineDeleteIcon />
             </IconButton>
           ) : (
-            <IconButton
-              onClick={onRestore}
-              className="!p-1 !pr-2 !bg-green-500 !border-green-900"
-            >
-              <AiOutlineSaveIcon />
-            </IconButton>
+            <>
+              <IconButton
+                onClick={onRestore}
+                className="!p-1 !bg-green-400 dark:bg-green-500 border-green-600 dark:border-green-600"
+              >
+                <AiOutlineSaveIcon />
+              </IconButton>
+              <IconButton
+                onClick={onDelete}
+                className="!p-1 !bg-red-400 dark:bg-red-500 border-red-600 dark:border-red-600"
+              >
+                <AiOutlineDeleteIcon />
+              </IconButton>
+            </>
           )}
           <IconButton
-            isActive
             onClick={copyDescriptionToClipboard}
-            className="!p-1 !pr-2 !bg-yellow-500 !border-yellow-900"
+            className="!p-1 !bg-yellow-400 dark:bg-yellow-500 border-yellow-600 dark:border-yellow-600"
           >
             <AiOutlineCopyIcon />
           </IconButton>

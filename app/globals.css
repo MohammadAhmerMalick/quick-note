@@ -34,6 +34,7 @@ body {
 
   * {
     font-family: 'Montserrat', sans-serif;
+    outline: none;
   }
 }
 
@@ -58,3 +59,5 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #303030;
 }
+
+@import url('./style/modal.css');

@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { type ChangeEvent, useState, useEffect } from 'react'
 
-import { classnames } from '@/utils'
 import { CloudUploadIcon } from '@/components/icons'
 
 interface FileDropAera {
@@ -30,21 +29,13 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
   }, [value])
 
   return (
-    <>
-      <span className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white">
+    <div>
+      <span className="mb-2 block text-sm font-medium text-neutral-900 dark:text-white">
         Upload File
       </span>
       <label
         htmlFor={id}
-        className={classnames(
-          'relative',
-          'flex justify-center',
-          'w-full',
-          'md:border-2 border border-neutral-300 hover:border-yellow-500 border-dashed rounded-lg dark:border-neutral-600 dark:hover:border-yellow-500 focus:border-yellow-500',
-          'px-4 py-6 md:py-12 mt-3',
-          'bg-neutral-50 dark:hover:bg-bray-800 dark:bg-neutral-800',
-          'cursor-pointer'
-        )}
+        className="dark:hover:bg-bray-800 relative mt-3 flex w-full cursor-pointer justify-center rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-4 py-6 hover:border-yellow-500 focus:border-yellow-500 md:border-2 md:py-12 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-yellow-500"
       >
         {image && (
           <Image
@@ -52,12 +43,7 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
             width="510"
             height="140"
             alt="Selected File"
-            className={classnames(
-              'absolute top-0 bottom-0 right-0 left-0',
-              'w-full h-full ',
-              'opacity-20',
-              'object-cover'
-            )}
+            className="absolute bottom-0 left-0 right-0 top-0 h-full w-full object-cover opacity-20"
           />
         )}
         <div className="flex items-center gap-5">
@@ -80,7 +66,7 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
           onChange={handleFileChange}
         />
       </label>
-    </>
+    </div>
   )
 }
 

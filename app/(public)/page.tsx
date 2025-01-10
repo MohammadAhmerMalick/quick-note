@@ -70,32 +70,26 @@ export default function Home() {
   return (
     <form
       onSubmit={onSubmit}
-      className="max-w-xl md:p-8 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800"
+      className="mx-auto max-w-xl space-y-6 rounded-lg bg-white p-6 shadow md:mt-0 md:p-8 dark:border dark:border-neutral-800 dark:bg-neutral-850"
     >
-      <div className="mb-6">
-        <Input
-          id="title"
-          isRequired
-          value={title}
-          labelText="Title"
-          placeholder="Title"
-          inputRef={TITLE_INPUT}
-          onChange={({ value }) => setTitle(value)}
-        />
-      </div>
-      <div className="mb-6">
-        <Textarea
-          id="description"
-          value={description}
-          labelText="Description"
-          placeholder="Description"
-          onChange={({ value }) => setDescription(value)}
-        />
-      </div>
+      <Input
+        id="title"
+        isRequired
+        value={title}
+        labelText="Title"
+        placeholder="Title"
+        inputRef={TITLE_INPUT}
+        onChange={({ value }) => setTitle(value)}
+      />
+      <Textarea
+        id="description"
+        value={description}
+        labelText="Description"
+        placeholder="Description"
+        onChange={({ value }) => setDescription(value)}
+      />
 
-      <div className="mb-6">
-        <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
-      </div>
+      <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
 
       <Button disabled={isSubmitting}>
         {isSubmitting ? 'Submitting' : 'Submit'}

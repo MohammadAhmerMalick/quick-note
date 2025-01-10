@@ -9,13 +9,12 @@ import getNotesAction, {
 import Input from '@/components/Input'
 import Modal from '@/components/Modal'
 import Button from '@/components/Button'
-import NoteCard from '@/components/NoteCard'
 import NoteList from '@/components/NoteList'
 import TokenFilter from '@/components/TokenFilter'
+import deleteNoteAction from '@/actions/deleteNoteAction'
 import restoreNoteAction from '@/actions/restoreNoteAction'
 import NoteStateSelector from '@/components/NoteStateSelector'
 import softDeleteNoteAction from '@/actions/softDeleteNoteAction'
-import NotesLayoutSelector from '@/components/NotesLayoutSelector'
 
 let dbData: GetNotesActionReutrn[] = []
 type noteStates = 'stared' | 'notDeleted' | 'deleted'
@@ -27,8 +26,8 @@ interface Tokens {
 
 const NotesList = () => {
   const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   const [counter, setCounter] = useState<number>(0)
-  const [layout, setLayout] = useState<'card' | 'list'>('list')
   const [notes, setNotes] = useState<GetNotesActionReutrn[]>([])
   const [selectedState, setSelectedState] = useState<noteStates>('notDeleted')
   const [tokens, setTokens] = useState<Tokens[]>()
@@ -42,6 +41,7 @@ const NotesList = () => {
       if (res.status === 'success') {
         dbData = res.data // update inreactive data
         setCounter((c) => c + 1) // to update ui
+        setIsOpen(false)
       } else throw new Error('Unable to fetch notes')
     } catch (error) {
       // on reject
@@ -50,8 +50,8 @@ const NotesList = () => {
     }
   }
 
-  // delete request
-  const deleteNote = async (id: string) => {
+  // soft delete request
+  const softDeleteNote = async (id: string) => {
     try {
       const { status } = await softDeleteNoteAction(id) // delete request
 
@@ -66,6 +66,28 @@ const NotesList = () => {
 
         // update the counter to update the notes list
         setCounter((c) => c + 1)
+        setIsOpen(false)
+      } else throw new Error('Unable to delete note')
+    } catch (error) {
+      // on reject
+      console.log({ error })
+      toast.error('Unable to delete')
+    }
+  }
+
+  //  delete request
+  const deleteNote = async (id: string) => {
+    try {
+      const { status } = await deleteNoteAction(id) // delete request
+
+      // on success
+      if (status === 'success') {
+        // change the deleted state of onetime fetched data
+        dbData = dbData.filter((note) => id !== note.id)
+
+        // update the counter to update the notes list
+        setCounter((c) => c + 1)
+        setIsOpen(false)
       } else throw new Error('Unable to delete note')
     } catch (error) {
       // on reject
@@ -85,6 +107,7 @@ const NotesList = () => {
 
         // update the counter to update the notes list
         setCounter((c) => c + 1)
+        setIsOpen(false)
       } else throw new Error('Unable to restore note')
     } catch (error) {
       // on reject
@@ -118,9 +141,8 @@ const NotesList = () => {
 
       return selectedTokens.filter(
         (token) =>
-          token.isSelected &&
-          (note.description.toLowerCase().includes(token.value) ||
-            note.title.toLowerCase().includes(token.value))
+          note.description.toLowerCase().includes(token.value) ||
+          note.title.toLowerCase().includes(token.value)
       ).length
     }
 
@@ -154,14 +176,13 @@ const NotesList = () => {
 
   return (
     <main className="mt-4">
-      {modalNote && (
-        <Modal
-          note={modalNote}
-          deleteNote={deleteNote}
-          restoreNote={restoreNote}
-          onClose={() => setModalNote(null)}
-        />
-      )}
+      <Modal
+        isOpen={isOpen}
+        note={modalNote}
+        restoreNote={restoreNote}
+        softDeleteNote={softDeleteNote}
+        onClose={() => setIsOpen(false)}
+      />
       <div className="flex gap-1">
         <Input
           isFocused
@@ -178,9 +199,7 @@ const NotesList = () => {
             setSelectedState={setSelectedState}
           />
 
-          <NotesLayoutSelector layout={layout} setLayout={setLayout} />
-
-          <Button className="flex items-center justify-center !px-1 min-w-9 max-w-max">
+          <Button className="flex min-w-9 max-w-max items-center justify-center !px-1">
             {notes.length}
           </Button>
         </div>
@@ -188,20 +207,20 @@ const NotesList = () => {
 
       <TokenFilter tokens={tokens} setTokens={setTokens} />
 
-      <div className="flex md:gap-4 gap-3 flex-wrap justify-center mt-4">
-        {notes.map((note) =>
-          layout === 'card' ? (
-            <NoteCard note={note} key={note.id} />
-          ) : (
-            <NoteList
-              note={note}
-              key={note.id}
-              deleteNote={deleteNote}
-              restoreNote={restoreNote}
-              onClick={() => setModalNote(note)}
-            />
-          )
-        )}
+      <div className="mt-4 flex flex-wrap justify-center gap-3 md:gap-4">
+        {notes.map((note) => (
+          <NoteList
+            note={note}
+            key={note.id}
+            onDeleteNote={deleteNote}
+            onRestoreNote={restoreNote}
+            onSoftDeleteNote={softDeleteNote}
+            onClick={() => {
+              setModalNote(note)
+              setIsOpen(!isOpen)
+            }}
+          />
+        ))}
       </div>
     </main>
   )

@@ -1,20 +1,22 @@
 'use server'
 
-import fs from 'fs'
-import path from 'path'
+import { join } from 'path'
 import { randomUUID } from 'crypto'
-import { writeFile } from 'fs/promises'
+import { mkdir, writeFile } from 'fs/promises'
 import { z as validate, ZodError } from 'zod'
 import { getStorage } from 'firebase-admin/storage'
 import { Timestamp, getFirestore } from 'firebase-admin/firestore'
-import updateNotesCountLimitAction from '@/actions/updateNotesCountLimitAction'
-import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
+
 import {
   MAX_FILE_SIZE,
   ACCEPTED_IMAGE_TYPES,
   NOTE_FILES_FOLDER_NAME,
   NUMBER_OF_ALLWOED_NOTES_PAR_DAY,
 } from '@/config/constants'
+import updateNotesCountLimitAction from '@/actions/updateNotesCountLimitAction'
+import initializeFirebaseAdminAction from '@/actions/initializeFirebaseAdminAction'
+
+const db = getFirestore()
 
 const validateInputFields = (
   title: string,
@@ -48,22 +50,25 @@ const validateInputFields = (
 }
 
 // store file locally
-const storeFileLocally = async (file: File, destinationFileName: string) => {
-  const directory = `public/assets/${NOTE_FILES_FOLDER_NAME}`
+const storeFileLocally = async (file: File) => {
+  // set unique name for file to upload to prevent file name conflict
+  const name = `${randomUUID()}_${file.name}`
 
-  // create directory if it does not exist
-  if (!fs.existsSync(directory)) fs.mkdirSync(directory, { recursive: true })
+  // check if mkdir folder locally exists
+  if (process.env.NODE_ENV === 'development')
+    await mkdir('./tmp', { recursive: true })
 
-  const fileLocalPath = path.join(
-    process.cwd(),
-    `${directory}/${destinationFileName}`
-  )
+  // local file path
+  const localFilePath =
+    process.env.NODE_ENV === 'production'
+      ? join('/tmp', name) // on production vercel alredy have tmp folder
+      : join(process.cwd(), '/tmp', name)
 
   // upload file to local
   const buffer = Buffer.from(await file.arrayBuffer())
-  await writeFile(fileLocalPath, buffer)
+  await writeFile(localFilePath, buffer)
 
-  return fileLocalPath
+  return { localFilePath, name }
 }
 
 /**
@@ -71,7 +76,6 @@ const storeFileLocally = async (file: File, destinationFileName: string) => {
  */
 const checkifLimitReached = async () => {
   // push the new note to firebase
-  const db = getFirestore()
 
   const doc = db
     .collection('notesCounter')
@@ -110,26 +114,17 @@ const storeNoteAction = async (
     validateInputFields(title, description, file)
 
     if (file) {
-      // set unique name for file to upload to prevent file name conflict
-      const destinationFileName = `${randomUUID()}_${file.name}`
-
       // store file locally
-      const fileLocalPath = await storeFileLocally(file, destinationFileName)
+      const { name, localFilePath } = await storeFileLocally(file)
 
       // upload file to firebase bucket
-      const uploadedFile = await getStorage()
+      await getStorage()
         .bucket()
-        .upload(fileLocalPath, {
-          destination: `${NOTE_FILES_FOLDER_NAME}/${destinationFileName}`,
+        .upload(localFilePath, {
+          destination: `${NOTE_FILES_FOLDER_NAME}/${name}`,
         })
 
-      fileData = [
-        {
-          size: file.size,
-          type: file.type,
-          name: destinationFileName,
-        },
-      ]
+      fileData = [{ size: file.size, type: file.type, name }]
     }
 
     // new note data
@@ -142,8 +137,6 @@ const storeNoteAction = async (
     }
 
     // push the new note to firebase
-    const db = getFirestore()
-
     const [isLimitReached, noteCount] = await checkifLimitReached()
     if (isLimitReached)
       throw new Error('Limit reached', { cause: 'limit-reached' })

@@ -12,8 +12,6 @@ import AiOutlineSaveIcon from './AiOutlineSaveIcon'
 import AiOutlineCloseIcon from './AiOutlineCloseIcon'
 import AiOutlineDeleteIcon from './AiOutlineDeleteIcon'
 import AiOutlineDatabaseIcon from './AiOutlineDatabaseIcon'
-import AiOutlineCreditCardIcon from './AiOutlineCreditCardIcon'
-import AiOutlineOrderedListIcon from './AiOutlineOrderedListIcon'
 
 export {
   FiHomeIcon,
@@ -30,6 +28,4 @@ export {
   AiOutlineCloseIcon,
   AiOutlineDeleteIcon,
   AiOutlineDatabaseIcon,
-  AiOutlineCreditCardIcon,
-  AiOutlineOrderedListIcon,
 }
