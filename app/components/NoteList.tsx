@@ -64,9 +64,9 @@ const NoteList = ({
       className={classnames(
         'w-full',
         'cursor-pointer',
-        'md:p-4 p-3',
-        'bg-white rounded-lg shadow md:mt-0 dark:bg-neutral-850',
-        'border border-transparent hover:border-yellow-500 hover:ring-yellow-200 hover:dark:ring-yellow-950 hover:ring-1 hover:bg-white hover:dark:bg-neutral-850'
+        'p-3 md:p-4',
+        'rounded-lg bg-white shadow md:mt-0 dark:bg-neutral-850',
+        'border border-transparent hover:border-yellow-500 hover:bg-white hover:ring-1 hover:ring-yellow-200 hover:dark:bg-neutral-850 hover:dark:ring-yellow-950'
       )}
       key={note.id}
     >
@@ -81,7 +81,7 @@ const NoteList = ({
         <div className="overflow-hidden">
           <h5
             className={classnames(
-              'font-semibold text-neutral-900 dark:text-neutral-200 line-clamp-2 ',
+              'line-clamp-2 font-semibold text-neutral-900 dark:text-neutral-200',
               'line-clamp-2 overflow-hidden',
               'mb-2'
             )}
@@ -101,16 +101,17 @@ const NoteList = ({
           <Image
             width={100}
             height={100}
-            className="object-contain rounded-md"
-            src={note.files?.[0].link || '/image-placeholder.svg'}
             alt={note.title}
+            className="rounded-md object-contain"
+            overrideSrc="./image-placeholder.svg"
+            src={note.files?.[0].link || './image-placeholder.svg'}
           />
         )}
-        <div className="flex gap-2 flex-col justify-end">
+        <div className="flex flex-col justify-end gap-2">
           {!note.deletedAt ? (
             <IconButton
               onClick={onSoftDelete}
-              className="!p-1 !bg-orange-400 dark:bg-orange-500 border-orange-600 dark:border-orange-600"
+              className="border-orange-600 !bg-orange-400 !p-1 dark:border-orange-600 dark:bg-orange-500"
             >
               <AiOutlineDeleteIcon />
             </IconButton>
@@ -118,13 +119,13 @@ const NoteList = ({
             <>
               <IconButton
                 onClick={onRestore}
-                className="!p-1 !bg-green-400 dark:bg-green-500 border-green-600 dark:border-green-600"
+                className="border-green-600 !bg-green-400 !p-1 dark:border-green-600 dark:bg-green-500"
               >
                 <AiOutlineSaveIcon />
               </IconButton>
               <IconButton
                 onClick={onDelete}
-                className="!p-1 !bg-red-400 dark:bg-red-500 border-red-600 dark:border-red-600"
+                className="border-red-600 !bg-red-400 !p-1 dark:border-red-600 dark:bg-red-500"
               >
                 <AiOutlineDeleteIcon />
               </IconButton>
@@ -132,7 +133,7 @@ const NoteList = ({
           )}
           <IconButton
             onClick={copyDescriptionToClipboard}
-            className="!p-1 !bg-yellow-400 dark:bg-yellow-500 border-yellow-600 dark:border-yellow-600"
+            className="border-yellow-600 !bg-yellow-400 !p-1 dark:border-yellow-600 dark:bg-yellow-500"
           >
             <AiOutlineCopyIcon />
           </IconButton>
