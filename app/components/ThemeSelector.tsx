@@ -49,7 +49,7 @@ const ThemeSelector = () => {
   }, [])
 
   return (
-    <div className="inline-flex p-1 ms-auto shadow rounded-full border dark:border-neutral-600">
+    <div className="ms-auto inline-flex rounded-full border p-1 shadow dark:border-neutral-600">
       {options.map((option) => (
         <button
           type="button"
@@ -58,9 +58,9 @@ const ThemeSelector = () => {
           onClick={() => onThemeChange(option.id)}
           className={classnames(
             selected === option.id
-              ? 'shadow border-transparent dark:border-neutral-600 bg-white dark:bg-neutral-800 z-10 sm:flex hidden'
+              ? 'z-10 hidden border-transparent bg-white shadow sm:flex dark:border-neutral-600 dark:bg-neutral-800'
               : 'border-transparent',
-            'p-2 hover:bg-neutral-100 dark:hover:bg-neutral-600 focus:bg-neutral-100 dark:focus:bg-neutral-700 outline-0 rounded-full border'
+            'rounded-full border p-2 outline-0 hover:bg-neutral-100 focus:bg-neutral-100 dark:hover:bg-neutral-600 dark:focus:bg-neutral-700'
           )}
         >
           <option.icon />

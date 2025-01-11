@@ -18,7 +18,7 @@ const Textarea = ({
   return (
     <label
       htmlFor={id}
-      className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white"
+      className="mb-2 block text-sm font-medium text-neutral-900 dark:text-white"
     >
       {labelText}
       <textarea
@@ -26,7 +26,7 @@ const Textarea = ({
         rows={rows}
         value={value}
         placeholder={placeholder}
-        className="mt-3 bg-neutral-50 border border-neutral-300 text-neutral-900 text-xs rounded-md focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 block w-full p-2.5 dark:bg-neutral-800 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950 focus-visible:outline-0"
+        className="mt-3 block w-full rounded-md border border-neutral-300 bg-neutral-50 p-2.5 text-xs text-neutral-900 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-200 focus-visible:outline-0 dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 dark:focus:border-yellow-500 dark:focus:ring-1 dark:focus:ring-yellow-950"
         onChange={({ currentTarget }) => onChange(currentTarget)}
       />
     </label>

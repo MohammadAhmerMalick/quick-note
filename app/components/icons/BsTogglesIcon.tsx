@@ -5,7 +5,7 @@ function BsTogglesIcon() {
       height="1em"
       viewBox="0 0 16 16"
       strokeWidth={0}
-      className=" fill-neutral-900"
+      className="fill-neutral-900"
     >
       <path
         fillRule="evenodd"
