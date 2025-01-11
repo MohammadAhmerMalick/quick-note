@@ -44,11 +44,16 @@ const getNotesAction = async (): Promise<SuccessRes | RejectRes> => {
           // add downloadable link in each file
           data.files.map(
             async (file: { size: number; type: string; name: string }) => {
-              const filePath = `${NOTE_FILES_FOLDER_NAME}/${file.name}`
-              const fileRef = bucket.file(filePath)
-              const downloadURL = await getDownloadURL(fileRef)
+              try {
+                const filePath = `${NOTE_FILES_FOLDER_NAME}/${file.name}`
+                const fileRef = bucket.file(filePath)
+                const downloadURL = await getDownloadURL(fileRef)
 
-              return { ...file, link: downloadURL }
+                return { ...file, link: downloadURL }
+              } catch (error) {
+                console.log({ getNotesAction: error })
+                return { ...file, link: '' }
+              }
             }
           )
         )
