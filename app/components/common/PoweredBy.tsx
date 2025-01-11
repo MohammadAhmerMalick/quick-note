@@ -1,10 +1,10 @@
 const PoweredBy = () => {
   return (
-    <p className="max-w-xl text-xs text-neutral-600 dark:text-neutral-500 mx-auto text-center p-2 mt-1">
+    <p className="mx-auto mt-1 max-w-xl p-2 text-center text-xs text-neutral-600 dark:text-neutral-500">
       Powered by:{' '}
       <a
         href="https://www.mohammadahmermalick.com"
-        className="text-neutral-950 dark:text-neutral-400 border-b border-neutral-500"
+        className="border-b border-neutral-500 text-neutral-950 dark:text-neutral-400"
       >
         Mohammad Ahmer Malick
       </a>

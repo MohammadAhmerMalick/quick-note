@@ -37,13 +37,13 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
   return (
     <div
       className={classnames(
-        'overflow-y-auto mt-4 duration-300',
+        'mt-4 overflow-y-auto duration-300',
         isExpanded ? 'max-h-40' : 'max-h-6'
       )}
     >
-      <div className="flex gap-1 flex-wrap px-1">
+      <div className="flex flex-wrap gap-1 px-1">
         <Button
-          className=" w-min !p-1"
+          className="w-min !p-1"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <BsTogglesIcon />

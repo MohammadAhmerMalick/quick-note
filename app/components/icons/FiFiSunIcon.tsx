@@ -7,7 +7,7 @@ const FiFiSunIcon = () => {
       viewBox="0 0 24 24"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="stroke-neutral-600 dark:stroke-neutral-50 fill-transparent"
+      className="fill-transparent stroke-neutral-600 dark:stroke-neutral-50"
     >
       <circle cx={12} cy={12} r={5} />
       <line x1={12} y1={1} x2={12} y2={3} />

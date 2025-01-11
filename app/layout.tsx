@@ -55,7 +55,7 @@ export default function RootLayout({
       )}
     >
       <body className={(inter.className, 'p-3')}>
-        <header className="flex justify-between items-center gap-1 flex-wrap mb-3">
+        <header className="mb-3 flex flex-wrap items-center justify-between gap-1">
           <NavLInks />
           <ThemeSelector />
         </header>

@@ -28,10 +28,9 @@ const IconButton = ({
       onClick={onClick}
       className={classnames(
         isActive
-          ? 'shadow border-yellow-400 dark:border-yellow-500 bg-neutral-50 dark:bg-neutral-850 z-10'
+          ? 'z-10 border-yellow-400 bg-neutral-50 shadow dark:border-yellow-500 dark:bg-neutral-850'
           : 'border-neutral-300 dark:border-neutral-600',
-        'text-neutral-900 md:p-2 p-2 outline-0 rounded-md border',
-        'hover:bg-neutral-100 dark:hover:bg-neutral-600 focus:bg-neutral-100 dark:focus:bg-neutral-850',
+        'rounded-md border p-2 text-neutral-900 outline-0 hover:bg-neutral-100 focus:bg-neutral-100 md:p-2 dark:hover:bg-neutral-600 dark:focus:bg-neutral-850',
         className
       )}
     >

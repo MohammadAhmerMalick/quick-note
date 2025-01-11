@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="max-w-xl md:p-8 p-6 mx-auto bg-white rounded-lg shadow dark:border md:mt-0 dark:bg-neutral-850 dark:border-neutral-800"
+      className="mx-auto max-w-xl rounded-lg bg-white p-6 shadow md:mt-0 md:p-8 dark:border dark:border-neutral-800 dark:bg-neutral-850"
     >
       <div className="mb-6">
         <Input
