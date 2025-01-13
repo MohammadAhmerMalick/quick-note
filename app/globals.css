@@ -35,6 +35,8 @@ body {
   * {
     font-family: 'Montserrat', sans-serif;
     outline: none;
+
+    transition-duration: 0.3s;
   }
 }
 
