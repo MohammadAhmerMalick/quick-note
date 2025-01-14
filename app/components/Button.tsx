@@ -1,60 +1,26 @@
-import { type MouseEventHandler, type ReactNode } from 'react'
+'use client'
+
+import { Button as AriaButton, type ButtonProps } from 'react-aria-components'
 
 import { classnames } from '@/utils'
 
-interface Button {
-  className?: string
-  disabled?: boolean
-  children: ReactNode
-  type?: 'submit' | 'button'
-  onClick?: MouseEventHandler<HTMLButtonElement>
-}
-
 const Button = ({
-  type = 'submit',
-  disabled,
   children,
   className,
-  onClick,
-}: Button) => {
+  type = 'submit',
+  ...props
+}: ButtonProps) => {
   return (
-    <button
+    <AriaButton
+      {...props}
       type={type}
-      disabled={disabled}
-      aria-disabled={disabled}
-      onClick={onClick}
       className={classnames(
-        'block',
-        'w-full',
-        'px-5',
-        'py-2.5',
-        'rounded-md',
-
-        'focus:ring-1',
-        'active:ring-1',
-        'focus:ring-yellow-200',
-        'active:ring-yellow-200',
-        'focus:border-yellow-500',
-        'active:border-yellow-500',
-        'focus:outline-none',
-        'active:outline-none',
-
-        'bg-yellow-400',
-        'dark:bg-yellow-500',
-        'disabled:bg-neutral-200',
-        'dark:disabled:bg-neutral-700',
-
-        'text-xs',
-        'text-center',
-        'font-semibold',
-        'text-neutral-900',
-        'disabled:text-neutral-400',
-
+        'dark:bg-primaborder-primary block w-full rounded-md bg-primary px-5 py-2.5 text-center text-xs font-semibold text-neutral-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-yellow-800 active:border-primary active:outline-none active:ring-1 active:ring-yellow-800 disabled:bg-neutral-200 disabled:text-neutral-400 dark:disabled:bg-neutral-700',
         className
       )}
     >
       {children}
-    </button>
+    </AriaButton>
   )
 }
 

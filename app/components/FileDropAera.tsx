@@ -35,7 +35,7 @@ const FileDropAera = ({ id, value, onChange }: FileDropAera) => {
       </span>
       <label
         htmlFor={id}
-        className="dark:hover:bg-bray-800 relative mt-3 flex w-full cursor-pointer justify-center rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-4 py-6 hover:border-yellow-500 focus:border-yellow-500 md:border-2 md:py-12 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-yellow-500"
+        className="dark:hover:bg-bray-800 relative mt-3 flex w-full cursor-pointer justify-center rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-4 py-6 hover:border-primary focus:border-primary md:border-2 md:py-12 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-primary"
       >
         {image && (
           <Image

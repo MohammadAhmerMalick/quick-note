@@ -44,7 +44,7 @@ const TokenFilter = ({ tokens, setTokens }: TokenFilterProps) => {
       <div className="flex flex-wrap gap-1 px-1">
         <Button
           className="w-min !p-1"
-          onClick={() => setIsExpanded(!isExpanded)}
+          onPress={() => setIsExpanded(!isExpanded)}
         >
           <BsTogglesIcon />
         </Button>

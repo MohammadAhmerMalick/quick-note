@@ -31,15 +31,15 @@ const Controls = () => {
 
   return (
     <div className="flex gap-3">
-      <Button className="max-w-max" onClick={terminateFirebase}>
+      <Button className="max-w-max" onPress={terminateFirebase}>
         Terimnate Firebase Connection
       </Button>
-      <Button className="max-w-max" onClick={initializeFirebaseAdmin}>
+      <Button className="max-w-max" onPress={initializeFirebaseAdmin}>
         Firebase Connect
       </Button>
 
       {isLoggedIn && (
-        <Button className="max-w-max" onClick={resetNotesCountLimit}>
+        <Button className="max-w-max" onPress={resetNotesCountLimit}>
           Reset Notes Count Limit
         </Button>
       )}

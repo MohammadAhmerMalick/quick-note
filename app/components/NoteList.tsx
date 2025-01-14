@@ -8,6 +8,7 @@ import {
   AiOutlineDeleteIcon,
 } from '@/components/icons'
 import { classnames } from '@/utils'
+import useLinkify from '@/hooks/useLinkify'
 import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 
@@ -66,7 +67,7 @@ const NoteList = ({
         'cursor-pointer',
         'p-3 md:p-4',
         'rounded-lg bg-white shadow md:mt-0 dark:bg-neutral-850',
-        'border border-transparent hover:border-yellow-500 hover:bg-white hover:ring-1 hover:ring-yellow-200 hover:dark:bg-neutral-850 hover:dark:ring-yellow-950'
+        'border border-transparent duration-100 hover:border-primary hover:bg-white hover:ring-1 hover:ring-yellow-200 hover:dark:bg-neutral-850 hover:dark:ring-yellow-950'
       )}
       key={note.id}
     >
@@ -93,9 +94,8 @@ const NoteList = ({
               'text-sm font-normal text-neutral-800 dark:text-neutral-300',
               'line-clamp-3 overflow-hidden'
             )}
-          >
-            {note.description}
-          </p>
+            dangerouslySetInnerHTML={{ __html: useLinkify(note.description) }}
+          />
         </div>
         {!!note.files?.length && (
           <Image
@@ -133,7 +133,7 @@ const NoteList = ({
           )}
           <IconButton
             onClick={copyDescriptionToClipboard}
-            className="border-yellow-600 !bg-yellow-400 !p-1 dark:border-yellow-600 dark:bg-yellow-500"
+            className="border-yellow-600 !bg-yellow-400 !p-1 dark:border-yellow-600 dark:bg-primary"
           >
             <AiOutlineCopyIcon />
           </IconButton>

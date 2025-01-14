@@ -91,7 +91,7 @@ export default function Home() {
 
       <FileDropAera id="file" value={fileValue} onChange={onFileChange} />
 
-      <Button disabled={isSubmitting}>
+      <Button isDisabled={isSubmitting}>
         {isSubmitting ? 'Submitting' : 'Submit'}
       </Button>
     </form>

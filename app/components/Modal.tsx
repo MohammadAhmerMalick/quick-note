@@ -12,6 +12,7 @@ import {
   AiOutlineDeleteIcon,
 } from '@/components/icons'
 import { classnames } from '@/utils'
+import useLinkify from '@/hooks/useLinkify'
 import IconButton from '@/components/IconButton'
 import { GetNotesActionReutrn } from '@/actions/getNotesAction'
 
@@ -30,6 +31,7 @@ const Modal = ({
   restoreNote,
   softDeleteNote,
 }: ModalProp) => {
+  const description = useLinkify(note?.description)
   if (!note) return <span />
 
   return (
@@ -50,9 +52,11 @@ const Modal = ({
             <h5 className="border-b border-neutral-200 pb-4 font-semibold text-neutral-900 dark:border-neutral-600 dark:text-neutral-200">
               {note.title}
             </h5>
-            <p className="whitespace-pre-line py-4 text-sm font-normal text-neutral-800 dark:text-neutral-300">
-              {note.description}
-            </p>
+            <p
+              className="whitespace-pre-line py-4 text-sm font-normal text-neutral-800 dark:text-neutral-300"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+
             <div className="flex items-center justify-end gap-2 border-t border-neutral-200 pt-4 dark:border-neutral-600">
               {!note.deletedAt ? (
                 <IconButton
@@ -72,7 +76,7 @@ const Modal = ({
 
               <IconButton
                 onClick={() => navigator.clipboard.writeText(note.description)}
-                className="flex items-center justify-center gap-1 !border-yellow-900 !bg-yellow-500 !p-1 !pr-2"
+                className="flex items-center justify-center gap-1 !border-yellow-900 !bg-primary !p-1 !pr-2"
               >
                 <AiOutlineCopyIcon /> <span>Copy</span>
               </IconButton>

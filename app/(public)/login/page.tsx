@@ -42,7 +42,7 @@ const Login = () => {
           onChange={({ value }) => setPassword(value)}
         />
       </div>
-      <Button disabled={isloading}>Login</Button>
+      <Button isDisabled={isloading}>Login</Button>
     </form>
   )
 }
