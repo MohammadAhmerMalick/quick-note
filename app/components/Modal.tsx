@@ -76,7 +76,7 @@ const Modal = ({
 
               <IconButton
                 onClick={() => navigator.clipboard.writeText(note.description)}
-                className="flex items-center justify-center gap-1 !border-yellow-900 !bg-yellow-500 !p-1 !pr-2"
+                className="flex items-center justify-center gap-1 !border-yellow-900 !bg-primary !p-1 !pr-2"
               >
                 <AiOutlineCopyIcon /> <span>Copy</span>
               </IconButton>

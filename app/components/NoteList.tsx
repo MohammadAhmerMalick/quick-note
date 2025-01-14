@@ -133,7 +133,7 @@ const NoteList = ({
           )}
           <IconButton
             onClick={copyDescriptionToClipboard}
-            className="border-yellow-600 !bg-yellow-400 !p-1 dark:border-yellow-600 dark:bg-yellow-500"
+            className="border-yellow-600 !bg-yellow-400 !p-1 dark:border-yellow-600 dark:bg-primary"
           >
             <AiOutlineCopyIcon />
           </IconButton>
