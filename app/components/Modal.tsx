@@ -4,6 +4,7 @@ import {
   DialogTrigger,
   Modal as AriaModal,
 } from 'react-aria-components'
+import Image from 'next/image'
 
 import {
   AiOutlineCopyIcon,
@@ -52,10 +53,27 @@ const Modal = ({
             <h5 className="border-b border-neutral-200 pb-4 font-semibold text-neutral-900 dark:border-neutral-600 dark:text-neutral-200">
               {note.title}
             </h5>
-            <p
-              className="whitespace-pre-line py-4 text-sm font-normal text-neutral-800 dark:text-neutral-300"
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
+            <div
+              className={classnames(
+                'gap-2 py-4 md:gap-6',
+                note.files.length && note.description && 'flex'
+              )}
+            >
+              <p
+                className="whitespace-pre-line text-sm font-normal text-neutral-800 dark:text-neutral-300"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
+              {!!note.files?.length && (
+                <Image
+                  width={1000}
+                  height={1000}
+                  alt={note.title}
+                  overrideSrc="./image-placeholder.svg"
+                  src={note.files?.[0].link || './image-placeholder.svg'}
+                  className="h-full max-h-[400px] w-min rounded-md object-contain"
+                />
+              )}
+            </div>
 
             <div className="flex items-center justify-end gap-2 border-t border-neutral-200 pt-4 dark:border-neutral-600">
               {!note.deletedAt ? (
