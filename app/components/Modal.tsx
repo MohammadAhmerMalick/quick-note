@@ -70,7 +70,7 @@ const Modal = ({
                   alt={note.title}
                   overrideSrc="./image-placeholder.svg"
                   src={note.files?.[0].link || './image-placeholder.svg'}
-                  className="h-full max-h-[400px] w-min rounded-md object-contain"
+                  className="mx-auto h-full max-h-[400px] w-min rounded-md object-contain"
                 />
               )}
             </div>
