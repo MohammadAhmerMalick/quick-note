@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { Inter } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 
 import { classnames } from '@/utils'
@@ -10,24 +10,36 @@ import ThemeSelector from '@/components/ThemeSelector'
 
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const montserrat = Montserrat({ subsets: ['latin'], preload: true })
 
 // initialize Firebase
 Firebase.initialize()
 
+const metaTitle = 'Quick Note'
+const metaFavicon = '/icon?<generated>'
+const metaDescription = 'Quick Note By Mohammad Ahmer Malick'
+
 export const metadata: Metadata = {
-  title: 'Quick Note',
-  description: 'Quick Note By Mohammad Ahmer Malick',
-  icons: [
-    { rel: 'apple-touch-icon', url: './favicon.svg' },
-    { rel: 'icon', url: './favicon.svg' },
-  ],
+  title: metaTitle,
+  description: metaDescription,
   authors: [
     {
       name: 'Mohammad Ahmer Malick',
       url: 'https://www.mohammadahmermalick.com/',
     },
   ],
+  appleWebApp: {
+    capable: true,
+    title: metaTitle,
+    statusBarStyle: 'default',
+    startupImage: metaFavicon,
+  },
+
+  twitter: {
+    title: metaTitle,
+    images: metaFavicon,
+    description: metaDescription,
+  },
 
   generator: 'Next.js',
   manifest: '/manifest.json',
@@ -54,7 +66,7 @@ export default function RootLayout({
         theme.toLowerCase()
       )}
     >
-      <body className={(inter.className, 'p-3')}>
+      <body className={classnames(montserrat.className, 'p-3')}>
         <header className="mb-3 flex flex-wrap items-center justify-between gap-1">
           <NavLInks />
           <ThemeSelector />
