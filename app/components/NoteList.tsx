@@ -102,8 +102,13 @@ const NoteList = ({
             width={100}
             height={100}
             alt={note.title}
+            unoptimized={note.files[0].type === 'image/svg+xml'}
             className="rounded-md object-contain"
-            overrideSrc="./image-placeholder.svg"
+            overrideSrc={
+              note.files[0].type === 'image/svg+xml'
+                ? undefined
+                : './image-placeholder.svg'
+            }
             src={note.files?.[0].link || './image-placeholder.svg'}
           />
         )}
