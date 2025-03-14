@@ -38,7 +38,7 @@ const validateInputFields = (
           )
           .refine(
             (files) => ACCEPTED_IMAGE_TYPES.includes(files?.type),
-            'Only .jpg, .jpeg, .png and .webp formats are supported.'
+            'Only .jpg, .jpeg, .png and .webp .svg formats are supported.'
           )
       )
     ),

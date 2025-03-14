@@ -34,6 +34,12 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     startupImage: metaFavicon,
   },
+  openGraph: {
+    title: metaTitle,
+    images: metaFavicon,
+    description: metaDescription,
+    url: 'https://quick-note.mohammadahmermalick.com/',
+  },
 
   twitter: {
     title: metaTitle,
